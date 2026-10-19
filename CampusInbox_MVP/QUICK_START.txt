@@ -1,0 +1,16 @@
+CampusInbox - Kareena Jahagirdar | PRN 123B1B048 | Division A
+
+1. Download CampusInbox_MVP.zip from the Drive folder.
+2. Extract All. Keep all files together.
+3. Python 3.10+ is required.
+4. On Windows: double-click start_windows.bat (or run: py app.py).
+5. Open http://127.0.0.1:8765 in Chrome/Edge.
+6. Click Load sample mails. Read the source and approve the three explicit deadlines.
+7. Open Reminders. Draft a reply, edit it and Save draft edits. Nothing is sent.
+8. Follow DEMO_SCRIPT.md to show revisions and calendar export.
+
+The default demo is an offline rules baseline with synthetic mails. It needs no API key. The optional two-role LLM adapter is included but was not live-provider tested. No real accounts are connected.
+
+23 unit tests plus the HTTP/restart and Chrome walkthroughs passed on Linux. Windows launcher steps were not executed on Windows.
+
+Stop with Ctrl+C. Keep the terminal open while demoing. Read README.md for full instructions and limits.

@@ -1,0 +1,30 @@
+digraph LG {
+  graph [rankdir=TB, bgcolor="white", pad=0.15, nodesep=0.35, ranksep=0.42, splines=ortho];
+  node [shape=box, style="rounded,filled", fillcolor="white", color="black", fontname="Helvetica", fontsize=11, margin="0.14,0.09", penwidth=1.2];
+  edge [color="black", penwidth=1.1, arrowsize=0.8, fontname="Helvetica", fontsize=9];
+
+  model [label="Chat model\n(any LangChain model, or offline ScriptedModel)"];
+  tools [label="ToolNode (LangChain tool calling)\nread_header | search_mail | read_context\nparse_date | check_quote"];
+  verify [label="Verify node (code, not the model)\nre-runs check_quote on the final answer", penwidth=1.8];
+  result [label="Deadline proposal + evidence quote\nwaits for human approval", shape=box];
+
+  model -> tools [label="tool_call"];
+  tools -> model [label="tool result"];
+  model -> verify [label="final_answer"];
+  verify -> model [label="gate failed: one reflection turn", style=dashed];
+  verify -> result [label="gate passed"];
+
+  subgraph cluster_plan {
+    label="Planning tools (extension)"; fontname="Helvetica"; fontsize=11; style="rounded"; color="black";
+    p1 [label="date_calculator\n\"by Friday\" -> date + days left", fontsize=10];
+    p2 [label="gmail_search (read-only)\ncalendar_events (read-only)", fontsize=10];
+    p3 [label="calendar_propose_event\nlink only - app cannot write", fontsize=10];
+    p4 [label="reminder preview\nnever sends", fontsize=10];
+    p5 [label="web_search\noff by default", fontsize=10];
+  }
+  result -> p1 [style=dotted, arrowhead=none];
+  result -> p2 [style=dotted, arrowhead=none];
+  result -> p3 [style=dotted, arrowhead=none];
+  result -> p4 [style=dotted, arrowhead=none];
+  result -> p5 [style=dotted, arrowhead=none];
+}

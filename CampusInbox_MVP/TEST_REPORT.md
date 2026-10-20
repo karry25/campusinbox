@@ -3,7 +3,7 @@ Kareena Jahagirdar | PRN 123B1B048 | Division A
 
 Executed on 19 October 2026 on Linux, Python 3.10 and headless Google Chrome. All input mails were synthetic. No live LLM, Google account, Classroom account, Google Calendar or WhatsApp API was used.
 
-## Automated unit tests: 23 passed
+## Automated unit tests: 74 passed (updated 21 October 2026; this report's numbered list shows the original 23)
 Command: `python3 -m unittest -v`
 
 1. Explicit timezone-aware date and verbatim quote extraction.
@@ -72,3 +72,7 @@ Five PNG screenshots record this running version. Desktop and phone images were 
 - Complete adversarial testing. One synthetic hostile-content sample does not prove that all model prompt injections are blocked.
 
 The app is a working local workflow MVP. It is not an always-on inbox service and must not be described as a deployed fully autonomous AI agent.
+
+
+## LangGraph extension tests: 35 passed (21 October 2026)
+Command: `python3 test_langgraph.py` in the CampusInbox_LangGraph folder. Offline; no API key, account or network. Covers the LangGraph agent graph (agreement with the plain loop on every test mail), the quote gate, the date calculator, demo inbox, proposal-only calendar, reminder preview, planner graph, demo mode and chat citations. Live Gmail, Calendar, web search and WhatsApp/SMTP delivery are not tested.

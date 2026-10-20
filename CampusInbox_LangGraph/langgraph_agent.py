@@ -26,7 +26,7 @@ from langgraph.prebuilt import ToolNode
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage, ToolMessage
 from langchain_core.tools import StructuredTool
 
-MAX_STEPS = plain.MAX_STEPS
+MAX_STEPS = 8
 
 
 def mail_tools(mt: plain.MailTools):

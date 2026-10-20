@@ -1,0 +1,39 @@
+Traceback (most recent call last):
+  File "/tmp/campusinbox/evaluation_v2/agent_eval.py", line 24, in chat
+    with urllib.request.urlopen(req, timeout=60) as r: data = json.loads(r.read())
+  File "/usr/lib/python3.10/urllib/request.py", line 216, in urlopen
+    return opener.open(url, data, timeout)
+  File "/usr/lib/python3.10/urllib/request.py", line 525, in open
+    response = meth(req, response)
+  File "/usr/lib/python3.10/urllib/request.py", line 634, in http_response
+    response = self.parent.error(
+  File "/usr/lib/python3.10/urllib/request.py", line 563, in error
+    return self._call_chain(*args)
+  File "/usr/lib/python3.10/urllib/request.py", line 496, in _call_chain
+    result = func(*args)
+  File "/usr/lib/python3.10/urllib/request.py", line 643, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 400: Bad Request
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/tmp/campusinbox/evaluation_v2/agent_eval.py", line 56, in <module>
+    with ThreadPoolExecutor(4) as ex: rows = list(ex.map(work, ids))
+  File "/usr/lib/python3.10/concurrent/futures/_base.py", line 621, in result_iterator
+    yield _result_or_cancel(fs.pop())
+  File "/usr/lib/python3.10/concurrent/futures/_base.py", line 319, in _result_or_cancel
+    return fut.result(timeout)
+  File "/usr/lib/python3.10/concurrent/futures/_base.py", line 451, in result
+    return self.__get_result()
+  File "/usr/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/usr/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/tmp/campusinbox/evaluation_v2/agent_eval.py", line 44, in work
+    ag = agent_loop.run_agent(chat, m["subject"], m["body"], ref)
+  File "/tmp/campusinbox/evaluation_v2/../CampusInbox_MVP/agent_loop.py", line 119, in run_agent
+    m = chat(msgs, TOOL_SPECS)
+  File "/tmp/campusinbox/evaluation_v2/agent_eval.py", line 34, in chat
+    raise RuntimeError("HTTP %s %r" % (e.code, raw[:300]))
+RuntimeError: HTTP 400 b'{"error":{"message":"Tool call validation failed: tool call validation failed: attempted to call tool \'json\' which was not in request.tools","type":"invalid_request_error","code":"tool_use_failed","failed_generation":"{\\"name\\": \\"json\\", \\"arguments\\": {\\"has_deadline\\":true,\\"deadline_date\\":\\"200'

@@ -1,0 +1,557 @@
+[
+ {
+  "id": "0265e13a2d",
+  "gold": "2001-05-08",
+  "rules_v2": "2001-05-08",
+  "llm_verified": "2001-05-08",
+  "scripted_agent": "2001-05-08",
+  "react_agent": "2001-05-08",
+  "react_agree": "2001-05-08",
+  "llm_plus_verifier": "2001-05-08",
+  "steps": 4,
+  "react_note": "",
+  "ver_verdict": "accept",
+  "trace": [
+   {
+    "step": 1,
+    "action": "read_header",
+    "args": {},
+    "observation": {
+     "date": "2001-05-07",
+     "weekday": "Monday"
+    }
+   },
+   {
+    "step": 2,
+    "action": "search_mail",
+    "args": {
+     "query": "deadline"
+    },
+    "observation": [
+     {
+      "n": 4,
+      "sentence": "I have the Audit Plan from AA so I will give them my comments and send it to you by tomorrow.",
+      "deadline_cue": true,
+      "date_expression": true
+     }
+    ]
+   },
+   {
+    "step": 3,
+    "action": "check_quote",
+    "args": {
+     "date_iso": "2001-05-08",
+     "quote": "I have the Audit Plan from AA so I will give them my comments and send it to you by tomorrow."
+    },
+    "observation": {
+     "ok": true,
+     "reason": "quote is verbatim and holds the date"
+    }
+   },
+   {
+    "step": 4,
+    "action": "final_answer",
+    "args": {
+     "deadline_date": "2001-05-08",
+     "has_deadline": true,
+     "quote": "I have the Audit Plan from AA so I will give them my comments and send it to you by tomorrow."
+    },
+    "gate": {
+     "ok": true,
+     "reason": "quote is verbatim and holds the date"
+    }
+   }
+  ],
+  "ver_msgs": [
+   {
+    "from": "Extractor",
+    "to": "Verifier",
+    "content": {
+     "due": "2001-05-08",
+     "quote": "send it to you by tomorrow."
+    }
+   },
+   {
+    "from": "Verifier",
+    "to": "Extractor",
+    "content": {
+     "verdict": "accept",
+     "reason": "deadline to act"
+    }
+   }
+  ]
+ },
+ {
+  "id": "bbaaaf03dc",
+  "gold": "2000-08-24",
+  "rules_v2": null,
+  "llm_verified": null,
+  "scripted_agent": null,
+  "react_agent": null,
+  "react_agree": null,
+  "llm_plus_verifier": null,
+  "steps": 6,
+  "react_note": "step limit",
+  "ver_verdict": null,
+  "trace": [
+   {
+    "step": 1,
+    "action": "read_header",
+    "args": {},
+    "observation": {
+     "date": "2000-08-26",
+     "weekday": "Saturday"
+    }
+   },
+   {
+    "step": 2,
+    "action": "search_mail",
+    "args": {
+     "query": "deadline"
+    },
+    "observation": [
+     {
+      "n": 0,
+      "sentence": "Re: Approval of article for this Friday's eBiz online employee newsletter",
+      "deadline_cue": false,
+      "date_expression": true
+     },
+     {
+      "n": 18,
+      "sentence": "08/23/2000 02:04 PM",
+      "deadline_cue": false,
+      "date_expression": true
+     },
+     {
+      "n": 22,
+      "sentence": "Subject: Approval of article for this Friday's eBiz online employee newsletter",
+      "deadline_cue": false,
+      "date_expression": true
+     },
+     {
+      "n": 25,
+      "sentence": "Please review the article for accuracy and return to me no later than 10 a.m.",
+      "deadline_cue": true,
+      "date_expression": false
+     },
+     {
+      "n": 26,
+      "sentence": "Houston time tomorrow (Thursday).",
+      "deadline_cue": false,
+      "date_expression": true
+     },
+     {
+      "n": 28,
+      "sentence": "Thursday, so we have to have a",
+      "deadline_cue": false,
+      "date_expression": true
+     }
+    ]
+   },
+   {
+    "step": 3,
+    "action": "check_quote",
+    "args": {
+     "date_iso": "2000-08-25T10:00:00",
+     "quote": "Please review the article for accuracy and return to me no later than 10 a.m."
+    },
+    "observation": {
+     "ok": false,
+     "reason": "quote does not contain a date that resolves to 2000-08-25T10:00:00"
+    }
+   },
+   {
+    "step": 4,
+    "action": "check_quote",
+    "args": {
+     "date_iso": "2000-08-24T10:00:00",
+     "quote": "Please review the article for accuracy and return to me no later than 10 a.m."
+    },
+    "observation": {
+     "ok": false,
+     "reason": "quote does not contain a date that resolves to 2000-08-24T10:00:00"
+    }
+   },
+   {
+    "step": 5,
+    "action": "check_quote",
+    "args": {
+     "date_iso": "2000-08-24T10:00:00",
+     "quote": "Please review the article for accuracy and return to me no later than 10 a.m."
+    },
+    "observation": {
+     "ok": false,
+     "reason": "quote does not contain a date that resolves to 2000-08-24T10:00:00"
+    }
+   },
+   {
+    "step": 6,
+    "error": "no function call, nudged"
+   }
+  ],
+  "ver_msgs": null
+ },
+ {
+  "id": "244403a55f",
+  "gold": null,
+  "rules_v2": null,
+  "llm_verified": null,
+  "scripted_agent": null,
+  "react_agent": null,
+  "react_agree": null,
+  "llm_plus_verifier": null,
+  "steps": 3,
+  "react_note": "",
+  "ver_verdict": null,
+  "trace": [
+   {
+    "step": 1,
+    "action": "read_header",
+    "args": {},
+    "observation": {
+     "date": "2000-11-16",
+     "weekday": "Thursday"
+    }
+   },
+   {
+    "step": 2,
+    "action": "search_mail",
+    "args": {
+     "query": "deadline"
+    },
+    "observation": [
+     {
+      "n": 2,
+      "sentence": "Committee on Tuesday, November 21, at 7:30 AM in the LS Library.",
+      "deadline_cue": false,
+      "date_expression": true
+     },
+     {
+      "n": 8,
+      "sentence": "Please RSVP to me if possible.",
+      "deadline_cue": true,
+      "date_expression": false
+     }
+    ]
+   },
+   {
+    "step": 3,
+    "action": "final_answer",
+    "args": {
+     "ambiguous": true,
+     "has_deadline": false
+    }
+   }
+  ],
+  "ver_msgs": null
+ },
+ {
+  "id": "e910f059e9",
+  "gold": "2001-10-04",
+  "rules_v2": "2001-10-04",
+  "llm_verified": "2001-10-04",
+  "scripted_agent": null,
+  "react_agent": "2001-10-04",
+  "react_agree": "2001-10-04",
+  "llm_plus_verifier": "2001-10-04",
+  "steps": 5,
+  "react_note": "",
+  "ver_verdict": "accept",
+  "trace": [
+   {
+    "step": 1,
+    "action": "read_header",
+    "args": {},
+    "observation": {
+     "date": "2001-10-03",
+     "weekday": "Wednesday"
+    }
+   },
+   {
+    "step": 2,
+    "action": "search_mail",
+    "args": {
+     "query": "deadline"
+    },
+    "observation": [
+     {
+      "n": 2,
+      "sentence": "Due to a computer \"bug\" within AGA's systems, AGA will release their report",
+      "deadline_cue": true,
+      "date_expression": false
+     },
+     {
+      "n": 3,
+      "sentence": "TOMORROW, Thursday at 2:00 EST.",
+      "deadline_cue": false,
+      "date_expression": true
+     },
+     {
+      "n": 4,
+      "sentence": "Just a reminder to get your AGA estimates in by Noon EST (11:00 CST) TOMORROW.",
+      "deadline_cue": true,
+      "date_expression": true
+     }
+    ]
+   },
+   {
+    "step": 3,
+    "action": "read_context",
+    "args": {
+     "n": 4
+    },
+    "observation": {
+     "n": 4,
+     "text": "TOMORROW, Thursday at 2:00 EST. Just a reminder to get your AGA estimates in by Noon EST (11:00 CST) TOMORROW. Last Year      +77"
+    }
+   },
+   {
+    "step": 4,
+    "action": "check_quote",
+    "args": {
+     "date_iso": "2001-10-04",
+     "quote": "Just a reminder to get your AGA estimates in by Noon EST (11:00 CST) TOMORROW."
+    },
+    "observation": {
+     "ok": true,
+     "reason": "quote is verbatim and holds the date"
+    }
+   },
+   {
+    "step": 5,
+    "action": "final_answer",
+    "args": {
+     "has_deadline": true,
+     "deadline_date": "2001-10-04",
+     "quote": "Just a reminder to get your AGA estimates in by Noon EST (11:00 CST) TOMORROW."
+    },
+    "gate": {
+     "ok": true,
+     "reason": "quote is verbatim and holds the date"
+    }
+   }
+  ],
+  "ver_msgs": [
+   {
+    "from": "Extractor",
+    "to": "Verifier",
+    "content": {
+     "due": "2001-10-04",
+     "quote": "TOMORROW, Thursday at 2:00 EST"
+    }
+   },
+   {
+    "from": "Verifier",
+    "to": "Extractor",
+    "content": {
+     "verdict": "accept",
+     "reason": "deadline for action"
+    }
+   }
+  ]
+ },
+ {
+  "id": "10c4b07a09",
+  "gold": "2001-05-09",
+  "rules_v2": null,
+  "llm_verified": "2001-05-09",
+  "scripted_agent": null,
+  "react_agent": "2001-05-09",
+  "react_agree": null,
+  "llm_plus_verifier": "2001-05-09",
+  "steps": 5,
+  "react_note": "",
+  "ver_verdict": "accept",
+  "trace": [
+   {
+    "step": 1,
+    "action": "read_header",
+    "args": {},
+    "observation": {
+     "date": "2001-05-08",
+     "weekday": "Tuesday"
+    }
+   },
+   {
+    "step": 2,
+    "action": "search_mail",
+    "args": {
+     "query": "deadline"
+    },
+    "observation": [
+     {
+      "n": 3,
+      "sentence": "From: Karen Lambert@ECT on 05/08/2001 09:28 AM",
+      "deadline_cue": false,
+      "date_expression": true
+     },
+     {
+      "n": 10,
+      "sentence": "From: Lisa Lees/ENRON@enronXgate on 05/08/2001 08:29 AM",
+      "deadline_cue": false,
+      "date_expression": true
+     },
+     {
+      "n": 21,
+      "sentence": "Please respond no later than 10 a.m.",
+      "deadline_cue": true,
+      "date_expression": false
+     },
+     {
+      "n": 22,
+      "sentence": "on Wednesday, May 9.",
+      "deadline_cue": false,
+      "date_expression": true
+     }
+    ]
+   },
+   {
+    "step": 3,
+    "action": "read_context",
+    "args": {
+     "n": 21
+    },
+    "observation": {
+     "n": 21,
+     "text": "CAN Gas Financial Swap Please respond no later than 10 a.m. on Wednesday, May 9."
+    }
+   },
+   {
+    "step": 4,
+    "action": "check_quote",
+    "args": {
+     "date_iso": "2001-05-09",
+     "quote": "Please respond no later than 10 a.m. on Wednesday, May 9."
+    },
+    "observation": {
+     "ok": true,
+     "reason": "quote is verbatim and holds the date"
+    }
+   },
+   {
+    "step": 5,
+    "action": "final_answer",
+    "args": {
+     "deadline_date": "2001-05-09",
+     "has_deadline": true,
+     "quote": "Please respond no later than 10 a.m. on Wednesday, May 9."
+    },
+    "gate": {
+     "ok": true,
+     "reason": "quote is verbatim and holds the date"
+    }
+   }
+  ],
+  "ver_msgs": [
+   {
+    "from": "Extractor",
+    "to": "Verifier",
+    "content": {
+     "due": "2001-05-09",
+     "quote": "Please respond no later than 10 a.m. on Wednesday, May 9."
+    }
+   },
+   {
+    "from": "Verifier",
+    "to": "Extractor",
+    "content": {
+     "verdict": "accept",
+     "reason": "deadline to respond"
+    }
+   }
+  ]
+ },
+ {
+  "id": "641e4b9ad0",
+  "gold": "2000-11-10",
+  "rules_v2": "2000-11-10",
+  "llm_verified": "2000-11-10",
+  "scripted_agent": "2000-11-10",
+  "react_agent": "2000-11-10",
+  "react_agree": "2000-11-10",
+  "llm_plus_verifier": "2000-11-10",
+  "steps": 5,
+  "react_note": "",
+  "ver_verdict": "accept",
+  "trace": [
+   {
+    "step": 1,
+    "action": "read_header",
+    "args": {},
+    "observation": {
+     "date": "2000-10-23",
+     "weekday": "Monday"
+    }
+   },
+   {
+    "step": 2,
+    "action": "search_mail",
+    "args": {
+     "query": "deadline"
+    },
+    "observation": [
+     {
+      "n": 3,
+      "sentence": "set a deadline of November 10th to have a plan on all North American projects",
+      "deadline_cue": true,
+      "date_expression": true
+     }
+    ]
+   },
+   {
+    "step": 3,
+    "action": "parse_date",
+    "args": {
+     "text": "November 10th"
+    },
+    "observation": {
+     "date": "2000-11-10",
+     "reason": "resolved against the Date header"
+    }
+   },
+   {
+    "step": 4,
+    "action": "check_quote",
+    "args": {
+     "date_iso": "2000-11-10",
+     "quote": "set a deadline of November 10th to have a plan on all North American projects"
+    },
+    "observation": {
+     "ok": true,
+     "reason": "quote is verbatim and holds the date"
+    }
+   },
+   {
+    "step": 5,
+    "action": "final_answer",
+    "args": {
+     "deadline_date": "2000-11-10",
+     "has_deadline": true,
+     "quote": "set a deadline of November 10th to have a plan on all North American projects"
+    },
+    "gate": {
+     "ok": true,
+     "reason": "quote is verbatim and holds the date"
+    }
+   }
+  ],
+  "ver_msgs": [
+   {
+    "from": "Extractor",
+    "to": "Verifier",
+    "content": {
+     "due": "2000-11-10",
+     "quote": "set a deadline of November 10th to have a plan"
+    }
+   },
+   {
+    "from": "Verifier",
+    "to": "Extractor",
+    "content": {
+     "verdict": "accept",
+     "reason": "deadline to act"
+    }
+   }
+  ]
+ }
+]

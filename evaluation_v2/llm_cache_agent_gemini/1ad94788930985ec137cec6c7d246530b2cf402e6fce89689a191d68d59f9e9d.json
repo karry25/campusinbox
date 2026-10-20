@@ -1,0 +1,1 @@
+{"message": {"content": "{\n  \"verdict\": \"accept\",\n  \"reason\": \"The date is a clear deadline for submitting entry and matching gift forms.\"\n}", "tool_calls": []}, "usage": {"completion_tokens": 32, "prompt_tokens": 245, "total_tokens": 277}}

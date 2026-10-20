@@ -55,7 +55,7 @@ macOS / Linux:
 ```sh
 python3 -m unittest -v
 ```
-The included `test_app.py` has 23 offline tests. TEST_REPORT.md records what was actually executed. `demo_walkthrough.py` runs an additional HTTP-level demo in a temporary database, including server restart persistence, without touching your normal app data:
+The suite (`test_app.py`, `test_agent.py`, `test_assistant.py`, `test_chatbot.py`) has 74 offline tests; all pass. No test calls a real model or Gmail. TEST_REPORT.md records what was actually executed. `demo_walkthrough.py` runs an additional HTTP-level demo in a temporary database, including server restart persistence, without touching your normal app data:
 ```bat
 py demo_walkthrough.py
 ```
@@ -78,6 +78,19 @@ EvidenceExtractor reads source content and proposes a deadline with evidence. Ac
 The default mode is an **offline rules baseline**, not a live LLM or a claim of fully autonomous AI. It recognizes explicit lines named `Course:`, `Task:` and `Due:`. `Due:` must contain a full ISO timestamp and timezone, for example `2026-10-20T18:00:00+05:30`. Ordinary free-form dates stay in review. It does not understand every real college email.
 
 A human can enter an exact verified date for an ambiguous mail and approve it. A changed assignment is matched only by an explicit `assignment_key`; automatic fuzzy matching is intentionally absent. Retained older source mails and the activity log let you inspect how a revision arrived. Every revision is held for approval, even when its date looks familiar. Older reminder records for that task are removed so they cannot act on a superseded deadline.
+
+## Agent features, chat and what is tested (read this before claiming anything)
+| Feature | Status |
+|---|---|
+| Tool loop (read_header, search_mail, read_context, parse_date, check_quote), step cap, reflection retry, Verifier, logged messages | Built, unit-tested with a mock model; offline scripted run needs no model. Live model run only on Enron/synthetic mail (see paper) |
+| BM25 retrieval, chat panel (mails + syllabus, source line shown, "not found") | Built, unit-tested (hit, no answer, injection in mail, fabricated quote) |
+| Priority, conflicts, weekly digest (`--digest`) | Built, unit-tested |
+| Console and file notifiers | Built, tested |
+| WhatsApp Cloud and email reminder adapters | Stub, dry-run unless CAMPUS_NOTIFY_LIVE=1 and your own keys; never run against the real services |
+| Gmail read-only import (`--gmail-login`, `--gmail-import N`) | Implemented, not live-tested. Read-only scope, token kept in ~/.campusinbox (mode 0600), nothing in this folder. No send code exists |
+| Classroom/Calendar sync, embeddings, learned planner, user study | Planned, not built |
+
+Agent mode: set CAMPUS_MODEL_URL, CAMPUS_MODEL_NAME, CAMPUS_ENGINE=agent (and CAMPUS_MODEL_KEY if needed). Chat model mode: also CAMPUS_CHAT_MODEL=1. Without these everything runs offline. Use synthetic mail until you decide to share real mail with your provider. The models are prompted, not trained; there is no trained classifier in this project.
 
 ## Optional LLM proposal mode (not live-provider tested)
 The same two roles can call a user-selected OpenAI-compatible chat-completions endpoint. No provider account, key, model download or billed request is included. Endpoint compatibility varies.

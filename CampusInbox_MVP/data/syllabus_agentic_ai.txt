@@ -1,0 +1,73 @@
+17
+Final Year B Tech Curriculum Regulations 2023 with effect from 2026-27
+Department of Computer Engineering
+Program:         B. Tech. (Computer Engineering)                          Semester: VII
+Course:          Agentic AI Design                                        Code: BCE27PE02
+Credit              Teaching Scheme (Hrs./Week)                    Evaluation Scheme and Marks
+FA
+Lecture      Practical    Tutorial     O*     FA1 FA     SA   TW       OR   PR     Total
+L       P   T
+2
+4       -       2            4               -      2      10   10   30       50   -    -       100
+Prior knowledge of Python programming and Basics of AI/ML
+is essential
+Course Objectives:
+Students will be able to
+1.​ Understand fundamental concepts, terminology, and interaction mechanisms of agentic artificial
+intelligence systems.
+2.​ Explore and implement frameworks and programming tools for designing single-agent autonomous AI
+systems.
+3.​ Analyze multi-agent workflows and evaluate agent performance, adaptability, and ethical
+considerations.
+4.​ Design and develop a complete domain-specific agentic AI model integrating perception, reasoning,
+and action modules.
+Course Outcomes:
+After learning the course, the students will be able to:
+1.​ Apply Fundamentals of AI agents and their interaction with environments.
+2.​ Implement basic single-agent systems using open-source frameworks.
+3.​ Evaluate agentic performance, adaptability, and ethical constraints.
+4.​ Design a domain-specific agentic AI project
+Guidelines for Laboratory/Term Work Assessment:
+1.​ Continuous assessment will be based on students’ overall performance and individual lab work.
+2.​ Each assignment will be graded on defined parameters with suitable weightage.
+3.​ Suggested parameters: timely completion, technical performance, innovation, efficiency, punctuality,
+and documentation quality.
+4.​ Final evaluation will reflect consistency, competence, and contribution across all lab activities.
+Guidelines for Laboratory Conduction:
+System Requirements: 64-bit Linux (Ubuntu/Fedora) or Windows 10/11.
+Programming Tools: Python (preferred), Java, C/C++; use of Anaconda or Jupyter Notebook
+encouraged.
+Frameworks/Platforms: LangChain, LangGraph, AutoGen, LlamaIndex, Git, GitHub, Docker,
+Kubernetes, Jenkins.
+Development Environment: VS Code / PyCharm / Jupyter Notebook.
+Detailed Syllabus
+Unit                                              Description                                  Duration
+(H)
+Foundations of Agentic AI
+Introduction to agentic AI: definitions, distinctions between traditional AI,
+generative AI and agentic (autonomous) systems. (Copilot, AutoGPT,Claude
+Artifacts,n8n). Large-language-models (LLMs) and their role in agentic systems:
+I       tokenization, embeddings, prompts, retrieval. ReAct and Chain-of-Thought             8
+frameworks
+Self Study:
+Prompt Engineering Techniques.
+18
+Final Year B Tech Curriculum Regulations 2023 with effect from 2026-27
+Department of Computer Engineering
+Architecture & Frameworks for Agents
+Agent architectures: single-agent vs multi-agent systems. Design patterns: Tool-use
+pattern, Reflection pattern, Planning, ReAct (Reasoning+Acting) pattern,
+II        Multi-agent orchestration. Framework overview: popular libraries and platforms:            8
+LangChain, LangGraph and vector DBs (FAISS, Chroma).
+Self Study:
+AutoGen, Crew
+Benchmarks, Agent Workflow Implementation & Multi-Agent Systems
+Multi-agent benchmarks, and Google’s A2A/A2P protocols for assessing planning,
+coordination, and self-correction. Inter-agent communication; task delegation,
+III
+collaboration, and role assignment; collective intelligence; workflow case studies:        7
+research automation, smart city monitoring.
+Self Study:
+ToolBench, AgentBench, Multi Agent Simulation.
+Evaluation & Emerging Trends
+Metrics for evaluating agents (accuracy, adaptability, safety); alignment and control;

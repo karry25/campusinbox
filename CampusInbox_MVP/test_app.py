@@ -129,4 +129,47 @@ class CampusTests(unittest.TestCase):
             self.assertEqual(len(first), 1); self.assertIn('Due within 1 hour', first[0])
             self.assertEqual(app.notify_once(db), [])          # not repeated
 
+    def test_offline_trace_and_messages_are_stored(self):
+        self.load()
+        snap = app.snapshot(self.db)
+        ds = next(x for x in snap['tasks'] if x['id'] == 'ds-report')
+        self.assertEqual([s['action'] for s in ds['trace']][:2], ['read_header', 'search_mail'])
+        self.assertEqual([m['sender'] for m in ds['messages']], ['Intake', 'Extractor', 'Verifier'])
+        self.approve('ds-report')
+        kinds = [m['kind'] for m in app.snapshot(self.db)['tasks'][0]['messages']] + [m['kind'] for t in app.snapshot(self.db)['tasks'] if t['id'] == 'ds-report' for m in t['messages']]
+        self.assertIn('approved', kinds)
+
+    def test_agent_mode_uses_model_tools_and_verifier_and_stays_in_review(self):
+        mail = {'id': 'g1', 'subject': 'Lab', 'body': 'Please submit the report by 2026-10-23.', 'assignment_key': 'g'}
+        q = 'Please submit the report by 2026-10-23.'
+        def call(n, a):
+            return {'content': '', 'tool_calls': [{'id': 'c', 'function': {'name': n, 'arguments': json.dumps(a)}}]}
+        replies = iter([call('search_mail', {}), call('final_answer', {'has_deadline': True, 'deadline_date': '2026-10-23', 'quote': q}),
+                        {'content': json.dumps({'verdict': 'accept', 'reason': 'action deadline'})}])
+        env = {'CAMPUS_MODEL_URL': 'http://localhost:1234/v1/chat/completions', 'CAMPUS_ENGINE': 'agent'}
+        with patch.dict(os.environ, env), patch.object(app, 'model_chat', side_effect=lambda m, t=None: next(replies)):
+            app.ingest(self.db, mail)
+        t = next(x for x in app.snapshot(self.db)['tasks'] if x['id'] == 'g')
+        self.assertEqual(t['engine'], 'agent (tool loop)'); self.assertTrue(t['review']); self.assertEqual(t['due_at'][:10], '2026-10-23')
+        self.assertIn('verifier: accept', t['reason']); self.assertEqual([m['receiver'] for m in t['messages']][-2:], ['Verifier', 'Reviewer'])
+
+    def test_agent_mode_invented_quote_is_not_trusted(self):
+        mail = {'id': 'g2', 'subject': 'Lab', 'body': 'Please submit the report by 2026-10-23.', 'assignment_key': 'g2'}
+        bad = {'content': '', 'tool_calls': [{'id': 'c', 'function': {'name': 'final_answer', 'arguments': json.dumps({'has_deadline': True, 'deadline_date': '2026-11-01', 'quote': 'made up'})}}]}
+        env = {'CAMPUS_MODEL_URL': 'http://localhost:1234/v1/chat/completions', 'CAMPUS_ENGINE': 'agent'}
+        with patch.dict(os.environ, env), patch.object(app, 'model_chat', return_value=bad):
+            app.ingest(self.db, mail)
+        t = next(x for x in app.snapshot(self.db)['tasks'] if x['id'] == 'g2')
+        self.assertNotEqual(t['due_at'][:10] if t['due_at'] else '', '2026-11-01')
+
+    def test_ask_panel_is_grounded_and_has_no_side_effects(self):
+        self.load(); self.approve('ds-report')
+        before = self.db.execute('SELECT COUNT(*) FROM tasks WHERE review=0').fetchone()[0]
+        self.assertIn('Replication report', app.ask(self.db, 'what is due this week?')['reply'])
+        w = app.ask(self.db, 'why Replication report')
+        self.assertIn('Source line', w['reply']); self.assertIn('read_header', w['evidence'])
+        r = app.ask(self.db, 'replication'); self.assertIn('Replication', r['reply']); self.assertIn('sample-002', r['evidence'])
+        self.assertRaises(ValueError, app.ask, self.db, ' ')
+        self.assertEqual(self.db.execute('SELECT COUNT(*) FROM tasks WHERE review=0').fetchone()[0], before)
+
 if __name__=='__main__':unittest.main(verbosity=2)

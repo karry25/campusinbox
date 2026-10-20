@@ -1,0 +1,1 @@
+{"message": {"content": "{\n  \"has_deadline\": false,\n  \"ambiguous\": true\n}", "tool_calls": []}, "usage": {"queue_time": 0.168020054, "prompt_tokens": 990, "prompt_time": 0.052479647, "completion_tokens": 62, "completion_time": 0.091843966, "total_tokens": 1052, "total_time": 0.144323613, "completion_tokens_details": {"reasoning_tokens": 36}}}

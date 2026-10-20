@@ -1,0 +1,134 @@
+{
+ "split": "test",
+ "n": 12,
+ "positives": 7,
+ "mean_steps": 5.67,
+ "systems": {
+  "rules_v2": {
+   "n": 12,
+   "emitted": 6,
+   "correct": 6,
+   "wrong": 0,
+   "precision": 1.0,
+   "recall": 0.8571428571428571,
+   "f1": 0.923076923076923,
+   "precision_ci95": [
+    1.0,
+    1.0
+   ],
+   "recall_ci95": [
+    0.5,
+    1.0
+   ],
+   "f1_ci95": [
+    0.6667,
+    1.0
+   ]
+  },
+  "llm_verified": {
+   "n": 12,
+   "emitted": 8,
+   "correct": 7,
+   "wrong": 1,
+   "precision": 0.875,
+   "recall": 1.0,
+   "f1": 0.9333333333333333,
+   "precision_ci95": [
+    0.6,
+    1.0
+   ],
+   "recall_ci95": [
+    1.0,
+    1.0
+   ],
+   "f1_ci95": [
+    0.75,
+    1.0
+   ]
+  },
+  "scripted_agent": {
+   "n": 12,
+   "emitted": 6,
+   "correct": 6,
+   "wrong": 0,
+   "precision": 1.0,
+   "recall": 0.8571428571428571,
+   "f1": 0.923076923076923,
+   "precision_ci95": [
+    1.0,
+    1.0
+   ],
+   "recall_ci95": [
+    0.5,
+    1.0
+   ],
+   "f1_ci95": [
+    0.6667,
+    1.0
+   ]
+  },
+  "react_agent": {
+   "n": 12,
+   "emitted": 7,
+   "correct": 7,
+   "wrong": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "precision_ci95": [
+    1.0,
+    1.0
+   ],
+   "recall_ci95": [
+    1.0,
+    1.0
+   ],
+   "f1_ci95": [
+    1.0,
+    1.0
+   ]
+  },
+  "react_agree": {
+   "n": 12,
+   "emitted": 6,
+   "correct": 6,
+   "wrong": 0,
+   "precision": 1.0,
+   "recall": 0.8571428571428571,
+   "f1": 0.923076923076923,
+   "precision_ci95": [
+    1.0,
+    1.0
+   ],
+   "recall_ci95": [
+    0.5,
+    1.0
+   ],
+   "f1_ci95": [
+    0.6667,
+    1.0
+   ]
+  },
+  "llm_plus_verifier": {
+   "n": 12,
+   "emitted": 6,
+   "correct": 6,
+   "wrong": 0,
+   "precision": 1.0,
+   "recall": 0.8571428571428571,
+   "f1": 0.923076923076923,
+   "precision_ci95": [
+    1.0,
+    1.0
+   ],
+   "recall_ci95": [
+    0.5714,
+    1.0
+   ],
+   "f1_ci95": [
+    0.7273,
+    1.0
+   ]
+  }
+ }
+}

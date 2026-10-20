@@ -10,6 +10,8 @@ import threading
 import urllib.request
 import urllib.error
 import rules_v2
+import agent_loop
+import assistant
 from datetime import datetime, timedelta, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -51,7 +53,11 @@ def init_db():
           id TEXT PRIMARY KEY, task_id TEXT, version INTEGER, label TEXT, fired_at TEXT);
         CREATE TABLE IF NOT EXISTS audit (
           id INTEGER PRIMARY KEY AUTOINCREMENT, at TEXT, event TEXT, detail TEXT);
+        CREATE TABLE IF NOT EXISTS messages (
+          id INTEGER PRIMARY KEY AUTOINCREMENT, at TEXT, task_id TEXT, sender TEXT, receiver TEXT, kind TEXT, content TEXT);
         ''')
+        if 'trace' not in [r[1] for r in db.execute('PRAGMA table_info(tasks)')]:
+            db.execute("ALTER TABLE tasks ADD COLUMN trace TEXT DEFAULT ''")
         db.execute("INSERT OR IGNORE INTO settings VALUES ('clock', ?)", (DEMO_TIME,))
         db.execute("INSERT OR IGNORE INTO settings VALUES ('mode', 'demo')")
 
@@ -59,6 +65,12 @@ def init_db():
 def now(db):
     mode = db.execute("SELECT value FROM settings WHERE key='mode'").fetchone()[0]
     return stamp(db.execute("SELECT value FROM settings WHERE key='clock'").fetchone()[0]) if mode == 'demo' else datetime.now(TZ)
+
+
+def bus(db, task_id, sender, receiver, kind, content):
+    """Logged message passing between roles (Intake, Extractor, Verifier, Reviewer, Planner, Notifier). Nothing here is a send."""
+    db.execute('INSERT INTO messages(at,task_id,sender,receiver,kind,content) VALUES(?,?,?,?,?,?)',
+               (now(db).isoformat(), task_id, sender, receiver, kind, json.dumps(content)[:1500]))
 
 
 def audit(db, event, detail):
@@ -69,6 +81,46 @@ class EvidenceExtractor:
     """Role 1: evidence extraction. Offline rules or optional model suggestion."""
     @staticmethod
     def extract(mail):
+        result = EvidenceExtractor._extract_base(mail)
+        return EvidenceExtractor._with_agents(mail, result)
+
+    @staticmethod
+    def _with_agents(mail, result):
+        """Adds the tool trace and the Extractor -> Verifier messages. Offline: a scripted tool run double-checks the rule result.
+        Agent mode (CAMPUS_ENGINE=agent plus a model endpoint): a model-driven tool loop proposes the date and a Verifier role checks it."""
+        ref = datetime.fromisoformat(mail_date(mail)).date()
+        tools = agent_loop.MailTools(mail['subject'], mail['body'], ref)
+        msgs = [('Intake', 'Extractor', 'mail', {'id': mail['id'], 'subject': mail['subject'][:80]})]
+        if os.getenv('CAMPUS_MODEL_URL') and os.getenv('CAMPUS_ENGINE') == 'agent':
+            ag = agent_loop.run_agent(model_chat, mail['subject'], mail['body'], ref)
+            trace = ag['trace']
+            if ag['due']:
+                ver = agent_loop.verify(model_chat, tools, ag['due'], ag['quote'])
+                rv = rules_v2.extract(mail['subject'], mail['body'], ref)
+                agree = rv['due'] == ag['due']
+                result.update(due_at=ag['due'] + 'T23:59:00+05:30', quote=ag['quote'], engine='agent (tool loop)', agreement='agree' if agree else 'disagree',
+                              reason='Agent used %d steps; verifier: %s; rule engine %s. Human approval still required.%s' % (
+                                  ag['steps'], ver['verdict'], 'agrees' if agree else 'does not agree',
+                                  ' VERIFIER REJECTED: check the quote carefully.' if ver['verdict'] != 'accept' else ''))
+                msgs += [('Extractor', 'Verifier', 'proposal', {'due': ag['due'], 'quote': ag['quote'][:200]}), ('Verifier', 'Reviewer', 'verdict', {'verdict': ver['verdict'], 'reason': ver['reason']})]
+            else:
+                result['reason'] = 'Agent found no single actionable date (%s). %s' % (ag['note'] or 'no deadline', result.get('reason', ''))
+                msgs.append(('Extractor', 'Reviewer', 'no-proposal', {'note': ag['note']}))
+        else:
+            sc = agent_loop.run_scripted(mail['subject'], mail['body'], ref)
+            trace = sc['trace']
+            second = sc['due']
+            first = result['due_at'][:10] if result.get('due_at') else None
+            msgs += [('Extractor', 'Verifier', 'proposal', {'due': result.get('due_at'), 'quote': (result.get('quote') or '')[:200]}),
+                     ('Verifier', 'Reviewer', 'verdict', {'scripted tool run': second, 'matches rule result': first == second})]
+            if first and first != second:
+                result['reason'] += ' The offline tool run found ' + (second or 'no date') + '; check the quote.'
+        result['trace'] = trace
+        result['messages'] = msgs
+        return result
+
+    @staticmethod
+    def _extract_base(mail):
         body = mail['body']
         course = re.search(r'^Course:\s*(.+)$', body, re.M)
         task = re.search(r'^Task:\s*(.+)$', body, re.M)
@@ -80,7 +132,7 @@ class EvidenceExtractor:
                       reason='Review extracted date against the source.' if due else 'No explicit timezone-aware deadline. Enter a verified date.')
         if due:
             stamp(result['due_at'])
-        if os.getenv('CAMPUS_MODEL_URL'):
+        if os.getenv('CAMPUS_MODEL_URL') and os.getenv('CAMPUS_ENGINE') != 'agent':
             suggestion = model_call('extractor', {'subject': mail['subject'], 'body': body, 'mail_date': mail_date(mail)})
             # A model proposal is never trusted without a literal source quote and human review.
             q = suggestion.get('quote', '')
@@ -159,6 +211,25 @@ def model_call(role, content):
     return json.loads(data['choices'][0]['message']['content'])
 
 
+def model_chat(messages, tools=None):
+    """OpenAI-compatible chat call used by the agent loop and the Verifier. Same endpoint rules as model_call."""
+    url = os.environ['CAMPUS_MODEL_URL']
+    if not url.startswith('https://') and not url.startswith(('http://127.0.0.1:', 'http://localhost:')):
+        raise ValueError('Model endpoint must use HTTPS or loopback HTTP.')
+    payload = {'model': os.getenv('CAMPUS_MODEL_NAME', 'local-model'), 'messages': messages, 'temperature': 0}
+    if tools:
+        payload.update(tools=tools, tool_choice='auto')
+    else:
+        payload['response_format'] = {'type': 'json_object'}
+    headers = {'Content-Type': 'application/json'}
+    if os.getenv('CAMPUS_MODEL_KEY'):
+        headers['Authorization'] = 'Bearer ' + os.environ['CAMPUS_MODEL_KEY']
+    request = urllib.request.Request(url, data=json.dumps(payload).encode(), headers=headers)
+    with urllib.request.urlopen(request, timeout=40) as response:
+        m = json.loads(response.read(400000))['choices'][0]['message']
+    return {'content': m.get('content') or '', 'tool_calls': m.get('tool_calls') or []}
+
+
 def ingest(db, mail):
     if not isinstance(mail, dict):
         raise ValueError('Each mail must be a JSON object.')
@@ -183,12 +254,14 @@ def ingest(db, mail):
     if old:
         db.execute('DELETE FROM reminders WHERE task_id=?', (key,))
         db.execute('''UPDATE tasks SET course=?,title=?,due_at=?,quote=?,mail_id=?,review=1,
-                      version=?,draft='',engine=?,reason=? WHERE id=?''',
-                   (extracted['course'], extracted['title'], extracted['due_at'], extracted['quote'], mail['id'], version, extracted['engine'], extracted['reason'], key))
+                      version=?,draft='',engine=?,reason=?,trace=? WHERE id=?''',
+                   (extracted['course'], extracted['title'], extracted['due_at'], extracted['quote'], mail['id'], version, extracted['engine'], extracted['reason'], json.dumps(extracted.get('trace', []))[:20000], key))
     else:
-        db.execute('''INSERT INTO tasks(id,course,title,due_at,quote,mail_id,engine,reason)
-                      VALUES(?,?,?,?,?,?,?,?)''',
-                   (key, extracted['course'], extracted['title'], extracted['due_at'], extracted['quote'], mail['id'], extracted['engine'], extracted['reason']))
+        db.execute('''INSERT INTO tasks(id,course,title,due_at,quote,mail_id,engine,reason,trace)
+                      VALUES(?,?,?,?,?,?,?,?,?)''',
+                   (key, extracted['course'], extracted['title'], extracted['due_at'], extracted['quote'], mail['id'], extracted['engine'], extracted['reason'], json.dumps(extracted.get('trace', []))[:20000]))
+    for snd, rcv, kind, content in extracted.get('messages', []):
+        bus(db, key, snd, rcv, kind, content)
     audit(db, 'revision held for review' if old else 'mail extracted', key + ' v' + str(version))
     return 'updated' if old else 'created'
 
@@ -205,6 +278,7 @@ def tick(db):
             key = f"{t['id']}:{t['version']}:{label}"
             cur = db.execute('INSERT OR IGNORE INTO reminders VALUES(?,?,?,?,?)', (key, t['id'], t['version'], label, clock.isoformat()))
             if cur.rowcount:
+                bus(db, t['id'], 'Planner', 'Notifier', 'reminder', {'label': label, 'version': t['version']})
                 audit(db, 'in-app reminder created', key)
 
 
@@ -215,6 +289,8 @@ def snapshot(db):
     for row in db.execute('SELECT * FROM tasks ORDER BY due_at IS NULL,due_at'):
         t = dict(row)
         t['state'] = ActionPlanner.state(t, clock)
+        t['trace'] = json.loads(t.get('trace') or '[]')
+        t['messages'] = [dict(r) for r in db.execute('SELECT at,sender,receiver,kind,content FROM messages WHERE task_id=? ORDER BY id', (t['id'],))]
         t['mail'] = json.loads(db.execute('SELECT payload FROM mails WHERE id=?', (t['mail_id'],)).fetchone()[0])
         tasks.append(t)
     return {'clock': clock.isoformat(), 'mode': db.execute("SELECT value FROM settings WHERE key='mode'").fetchone()[0],
@@ -242,6 +318,8 @@ def action(db, path, data):
         db.execute("UPDATE settings SET value='demo' WHERE key='mode'")
         audit(db, 'demo clock changed', value)
         return {'message': 'Demo clock changed. This does not change your device clock.'}
+    if path == '/api/ask':
+        return ask(db, data.get('text'))
     if path == '/api/liveclock':
         db.execute("UPDATE settings SET value='live' WHERE key='mode'")
         return {'message': 'Using device time. No external account connection.'}
@@ -260,6 +338,7 @@ def action(db, path, data):
             db.execute('DELETE FROM reminders WHERE task_id=?', (key,))
             db.execute('UPDATE tasks SET version=version+1 WHERE id=?', (key,))
         db.execute('UPDATE tasks SET due_at=?,review=0 WHERE id=?', (due, key))
+        bus(db, key, 'Reviewer', 'Planner', 'approved', {'due_at': due, 'version': t['version'] + (1 if due != t['due_at'] else 0)})
         audit(db, 'deadline verified by student', key + ': ' + due)
         return {'message': 'Deadline approved. Reminders are now active.'}
     if path == '/api/status':
@@ -289,6 +368,50 @@ def action(db, path, data):
         audit(db, 'draft created (not sent)', key)
         return {'message': 'Draft ready for editing and review. There is no send function.'}
     raise ValueError('Unknown action.')
+
+
+def _tasks(db):
+    return [dict(r) for r in db.execute('SELECT * FROM tasks')]
+
+
+def assistant_view(db):
+    clock = now(db)
+    tasks = _tasks(db)
+    return {'priority': [{'rank': r, 'label': l, 'title': t['title'], 'course': t['course'], 'due_at': t['due_at']} for r, l, t in assistant.priority(tasks, clock, stamp)],
+            'conflicts': assistant.conflicts(tasks, stamp), 'digest': assistant.weekly_digest(tasks, clock, stamp)}
+
+
+def ask(db, text):
+    """The assistant panel. Rule-based routing over real app data, no model call, no side effects. Returns {'reply', 'evidence'}."""
+    q = (text or '').strip()[:300]
+    low = q.lower()
+    tasks = _tasks(db)
+    clock = now(db)
+    if not q:
+        raise ValueError('Ask something, for example: what is due this week?')
+    if any(w in low for w in ('digest', 'due', 'week', 'urgent', 'priority', 'next')):
+        return {'reply': assistant.weekly_digest(tasks, clock, stamp), 'evidence': 'computed from approved tasks only'}
+    if 'conflict' in low or 'clash' in low:
+        cf = assistant.conflicts(tasks, stamp)
+        return {'reply': 'No deadline conflicts.' if not cf else '\n'.join("'%s' and '%s' are %.1f h apart." % c for c in cf), 'evidence': 'approved, not-submitted tasks due within 3 hours'}
+    if low.startswith(('why', 'explain', 'evidence', 'proof')):
+        for t in tasks:
+            if t['title'].lower() in low or t['id'].lower() in low:
+                steps = json.loads(t.get('trace') or '[]')
+                return {'reply': '%s: %s. Source line: "%s". Engine: %s. %s' % (t['title'], t['due_at'] or 'no verified date', t['quote'] or 'none', t['engine'], t['reason']),
+                        'evidence': ' -> '.join(x.get('action', '?') for x in steps) or 'no trace'}
+        return {'reply': 'Name a task, for example: why Replication report?', 'evidence': ''}
+    import chatbot
+    mails = [json.loads(r[0]) for r in db.execute('SELECT payload FROM mails')]
+    syl = Path(__file__).with_name('data').joinpath('syllabus_agentic_ai.txt')
+    corpus = chatbot.Corpus(mails, syl.read_text() if syl.exists() else '')
+    if os.environ.get('CAMPUS_MODEL_URL') and os.environ.get('CAMPUS_CHAT_MODEL') == '1':
+        res = chatbot.answer_web(model_chat, corpus, q) if chatbot.web_enabled() else chatbot.answer_agent(model_chat, corpus, q)
+    else:
+        res = chatbot.answer_offline(corpus, q)
+    cites = '; '.join('%s: "%s"' % (c['source'], c['quote'][:140]) for c in res['citations'])
+    reply = res['answer'] + (('\nCaveats: ' + res['caveats']) if res.get('caveats') else '')
+    return {'reply': reply, 'evidence': ('Source: ' + cites) if cites else 'no source found', 'mode': res['mode'], 'trace': res.get('trace', [])}
 
 
 def read_eml(path):
@@ -339,9 +462,9 @@ def notify_once(db, out_path=None):
             lines.append(f"{r['fired_at']} | {r['label']} | {r['course']}: {r['title']}")
     if lines:
         audit(db, 'local notifier announced', str(len(lines)))
-        if out_path:
-            with open(out_path, 'a', encoding='utf-8') as f:
-                f.write('\n'.join(lines) + '\n')
+        for n in assistant.notifiers_from_env(out_path, console=False):
+            n.send('\n'.join(lines))
+            bus(db, None, 'Planner', 'Notifier', 'delivered via ' + n.name, {'count': len(lines)})
     return lines
 
 
@@ -394,6 +517,9 @@ class Handler(BaseHTTPRequestHandler):
         if self.path == '/calendar.ics':
             with LOCK, connect() as db:
                 return self.respond(200, calendar_ics(db), 'text/calendar')
+        if self.path == '/api/assistant':
+            with LOCK, connect() as db:
+                return self.respond(200, assistant_view(db))
         if self.path == '/api/state':
             with LOCK, connect() as db:
                 return self.respond(200, snapshot(db))
@@ -444,6 +570,9 @@ def main():
     parser.add_argument('--import-mbox', help='local mbox export file')
     parser.add_argument('--notify', action='store_true', help='print new reminders and exit (run from cron or a loop)')
     parser.add_argument('--notify-file')
+    parser.add_argument('--digest', action='store_true', help='print the weekly digest and exit')
+    parser.add_argument('--gmail-login', action='store_true', help='user-run read-only Gmail sign-in (needs ~/.campusinbox/client.json)')
+    parser.add_argument('--gmail-import', type=int, metavar='N', help='read the last N Gmail messages (read-only) into the review queue')
     args = parser.parse_args()
     DB = Path(args.db)
     init_db()
@@ -463,6 +592,19 @@ def main():
             mails += read_mbox(args.import_mbox)
         with connect() as db:
             print(import_many(db, mails))
+        return
+    if args.digest:
+        with connect() as db:
+            print(assistant.weekly_digest(_tasks(db), now(db), stamp))
+        return
+    if args.gmail_login:
+        import gmail_auth
+        print('Saved token:', gmail_auth.login())
+        return
+    if args.gmail_import:
+        import gmail_auth
+        with connect() as db:
+            print(import_many(db, gmail_auth.fetch_recent(args.gmail_import)))
         return
     if args.notify:
         with connect() as db:

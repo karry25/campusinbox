@@ -1,0 +1,134 @@
+{
+ "split": "dev",
+ "n": 6,
+ "positives": 5,
+ "mean_steps": 4.67,
+ "systems": {
+  "rules_v2": {
+   "n": 6,
+   "emitted": 3,
+   "correct": 3,
+   "wrong": 0,
+   "precision": 1.0,
+   "recall": 0.6,
+   "f1": 0.7499999999999999,
+   "precision_ci95": [
+    1.0,
+    1.0
+   ],
+   "recall_ci95": [
+    0.1667,
+    1.0
+   ],
+   "f1_ci95": [
+    0.2857,
+    1.0
+   ]
+  },
+  "llm_verified": {
+   "n": 6,
+   "emitted": 4,
+   "correct": 4,
+   "wrong": 0,
+   "precision": 1.0,
+   "recall": 0.8,
+   "f1": 0.888888888888889,
+   "precision_ci95": [
+    1.0,
+    1.0
+   ],
+   "recall_ci95": [
+    0.4,
+    1.0
+   ],
+   "f1_ci95": [
+    0.5714,
+    1.0
+   ]
+  },
+  "scripted_agent": {
+   "n": 6,
+   "emitted": 2,
+   "correct": 2,
+   "wrong": 0,
+   "precision": 1.0,
+   "recall": 0.4,
+   "f1": 0.5714285714285715,
+   "precision_ci95": [
+    1.0,
+    1.0
+   ],
+   "recall_ci95": [
+    0.0,
+    0.8333
+   ],
+   "f1_ci95": [
+    0.0,
+    0.9091
+   ]
+  },
+  "react_agent": {
+   "n": 6,
+   "emitted": 4,
+   "correct": 4,
+   "wrong": 0,
+   "precision": 1.0,
+   "recall": 0.8,
+   "f1": 0.888888888888889,
+   "precision_ci95": [
+    1.0,
+    1.0
+   ],
+   "recall_ci95": [
+    0.4,
+    1.0
+   ],
+   "f1_ci95": [
+    0.5714,
+    1.0
+   ]
+  },
+  "react_agree": {
+   "n": 6,
+   "emitted": 3,
+   "correct": 3,
+   "wrong": 0,
+   "precision": 1.0,
+   "recall": 0.6,
+   "f1": 0.7499999999999999,
+   "precision_ci95": [
+    1.0,
+    1.0
+   ],
+   "recall_ci95": [
+    0.1667,
+    1.0
+   ],
+   "f1_ci95": [
+    0.2857,
+    1.0
+   ]
+  },
+  "llm_plus_verifier": {
+   "n": 6,
+   "emitted": 4,
+   "correct": 4,
+   "wrong": 0,
+   "precision": 1.0,
+   "recall": 0.8,
+   "f1": 0.888888888888889,
+   "precision_ci95": [
+    1.0,
+    1.0
+   ],
+   "recall_ci95": [
+    0.4,
+    1.0
+   ],
+   "f1_ci95": [
+    0.5714,
+    1.0
+   ]
+  }
+ }
+}

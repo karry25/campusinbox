@@ -1,0 +1,1 @@
+{"message": {"content": "{\"verdict\": \"accept\", \"reason\": \"The date represents a deadline for the sender to get back to the other party regarding a request.\"}", "tool_calls": []}, "usage": {"completion_tokens": 31, "prompt_tokens": 245, "total_tokens": 276}}

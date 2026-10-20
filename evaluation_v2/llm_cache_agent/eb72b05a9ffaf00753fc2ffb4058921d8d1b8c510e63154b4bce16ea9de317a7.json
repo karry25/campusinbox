@@ -1,0 +1,1 @@
+{"message": {"content": "{\"verdict\":\"accept\",\"reason\":\"deadline for action\"}", "tool_calls": []}, "usage": {"queue_time": 0.169964714, "prompt_tokens": 320, "prompt_time": 0.023586887, "completion_tokens": 106, "completion_time": 0.112872149, "total_tokens": 426, "total_time": 0.136459036, "completion_tokens_details": {"reasoning_tokens": 85}}}

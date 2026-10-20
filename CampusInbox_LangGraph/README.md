@@ -16,7 +16,9 @@ reminder tools, and a demo mode you can screen-record.
 | `reminder_preview.py` | Shows the exact WhatsApp/email reminder the agent would send. Never sends. |
 | `planner_graph.py` | A second LangGraph workflow: fetch mails -> extract deadlines (the sub-graph above) -> plan (time left, calendar, reminder preview) -> report. |
 | `demo_mode.py` | Simulated sign-in over a synthetic inbox for the demo video. Clearly labelled, no real account. |
-| `test_langgraph.py` | 29 offline tests. Run: `python3 test_langgraph.py` |
+
+Mails carry a course tag (an explicit `course` field, else keyword rules in `tag_course`), and the planner and demo show a per-subject deadline view. The demo inbox is a synthetic week across four courses: Agentic AI (FA2 slides, "by Friday"), Distributed Systems (revised report deadline), OOMD (term-work file) and the Placement cell (certificates).
+| `test_langgraph.py` | 35 offline tests. Run: `python3 test_langgraph.py` |
 
 Setup: `pip install -r requirements.txt` (adds `langgraph` and `langchain-core`; everything else is the
 Python standard library, same as the MVP).
@@ -79,7 +81,7 @@ Read-only, standard-library OAuth, token stored in `~/.campusinbox/` with mode 0
 
 ## What was actually tested
 
-- All 29 tests in `test_langgraph.py` pass offline (LangGraph graph, gate, tools, planner, demo, chat).
+- All 35 tests in `test_langgraph.py` pass offline (LangGraph graph, gate, tools, planner, demo, chat).
 - The LangGraph engine's answers match the plain-Python loop on every test mail.
 - NOT live-tested: real Gmail/Calendar sign-in (needs your laptop), real web search (needs
   `CAMPUS_WEB=1` + `CAMPUS_SEARCH_URL`), live WhatsApp/SMTP sending (needs your credentials).

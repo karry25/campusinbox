@@ -36,16 +36,26 @@ class ScriptedModel:
             hits = [h for h in (last or []) if h.get("deadline_cue")] if isinstance(last, list) else []
             if not hits:
                 return self._call(3, "final_answer", {"has_deadline": False, "ambiguous": False})
+            self._hits = hits
+            self._hit_i = 0
             self._quote = hits[0]["sentence"]
             return self._call(3, "parse_date", {"text": hits[0]["sentence"]})
-        if n == 3:
-            if not (last or {}).get("date"):
-                return self._call(4, "final_answer", {"has_deadline": False, "ambiguous": True})
-            self._due = last["date"]
-            return self._call(4, "check_quote", {"quote": self._quote, "date_iso": self._due})
-        if n == 4:
-            if not (last or {}).get("ok"):
-                return self._call(5, "final_answer", {"has_deadline": False, "ambiguous": False})
-            return self._call(5, "final_answer", {"has_deadline": True, "deadline_date": self._due, "quote": self._quote})
+        if n >= 3 and isinstance(last, dict) and "ok" in last:
+            # check_quote result
+            if not last.get("ok"):
+                return self._call(n + 1, "final_answer", {"has_deadline": False, "ambiguous": False})
+            return self._call(n + 1, "final_answer", {"has_deadline": True, "deadline_date": self._due, "quote": self._quote})
+        if n >= 3 and isinstance(last, dict) and "date" in last:
+            # parse_date result
+            if last.get("date"):
+                self._due = last["date"]
+                return self._call(n + 1, "check_quote", {"quote": self._quote, "date_iso": self._due})
+            # One reflection-style retry per remaining deadline-cue sentence, then abstain.
+            self._hit_i = getattr(self, "_hit_i", 0) + 1
+            hits = getattr(self, "_hits", [])
+            if self._hit_i < len(hits):
+                self._quote = hits[self._hit_i]["sentence"]
+                return self._call(n + 1, "parse_date", {"text": hits[self._hit_i]["sentence"]})
+            return self._call(n + 1, "final_answer", {"has_deadline": False, "ambiguous": True})
         # After a reflection turn: finish safely rather than loop.
         return self._call(n + 1, "final_answer", {"has_deadline": False, "ambiguous": True})

@@ -1,0 +1,452 @@
+[
+ {
+  "n": 1,
+  "id": "a80d1da600",
+  "kind": "dispute",
+  "A": "2001-03-30",
+  "A_amb": false,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 2,
+  "id": "05380085dd",
+  "kind": "dispute",
+  "A": "2001-11-07",
+  "A_amb": false,
+  "B": "2001-11-05",
+  "B_amb": false
+ },
+ {
+  "n": 3,
+  "id": "e60a85bf63",
+  "kind": "check",
+  "A": null,
+  "A_amb": false,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 4,
+  "id": "aa067de586",
+  "kind": "check",
+  "A": null,
+  "A_amb": false,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 5,
+  "id": "17da53a365",
+  "kind": "dispute",
+  "A": null,
+  "A_amb": true,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 6,
+  "id": "0fa4363742",
+  "kind": "dispute",
+  "A": "2001-07-01",
+  "A_amb": false,
+  "B": null,
+  "B_amb": true
+ },
+ {
+  "n": 7,
+  "id": "7a5f2a7641",
+  "kind": "dispute",
+  "A": "2000-09-25",
+  "A_amb": false,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 8,
+  "id": "60e0fc40b2",
+  "kind": "dispute",
+  "A": "2001-01-04",
+  "A_amb": false,
+  "B": "2001-01-03",
+  "B_amb": false
+ },
+ {
+  "n": 9,
+  "id": "b45070058d",
+  "kind": "dispute",
+  "A": "2000-03-21",
+  "A_amb": false,
+  "B": "2000-03-10",
+  "B_amb": false
+ },
+ {
+  "n": 10,
+  "id": "60e7e0c536",
+  "kind": "check",
+  "A": "2001-05-25",
+  "A_amb": false,
+  "B": "2001-05-25",
+  "B_amb": false
+ },
+ {
+  "n": 11,
+  "id": "7bcf08a4d0",
+  "kind": "check",
+  "A": "2001-10-26",
+  "A_amb": false,
+  "B": "2001-10-26",
+  "B_amb": false
+ },
+ {
+  "n": 12,
+  "id": "0ac201a986",
+  "kind": "check",
+  "A": null,
+  "A_amb": false,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 13,
+  "id": "e6369c2a08",
+  "kind": "check",
+  "A": null,
+  "A_amb": false,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 14,
+  "id": "97ab52bb0f",
+  "kind": "dispute",
+  "A": "2000-06-13",
+  "A_amb": false,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 15,
+  "id": "962d307ace",
+  "kind": "dispute",
+  "A": null,
+  "A_amb": true,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 16,
+  "id": "2a54e1be03",
+  "kind": "dispute",
+  "A": "1999-11-12",
+  "A_amb": false,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 17,
+  "id": "3a21581f53",
+  "kind": "check",
+  "A": "2001-05-25",
+  "A_amb": false,
+  "B": "2001-05-25",
+  "B_amb": false
+ },
+ {
+  "n": 18,
+  "id": "79c22b8080",
+  "kind": "dispute",
+  "A": null,
+  "A_amb": false,
+  "B": "2001-11-09",
+  "B_amb": false
+ },
+ {
+  "n": 19,
+  "id": "27e50da494",
+  "kind": "check",
+  "A": null,
+  "A_amb": false,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 20,
+  "id": "5beb745725",
+  "kind": "check",
+  "A": "2000-04-03",
+  "A_amb": false,
+  "B": "2000-04-03",
+  "B_amb": false
+ },
+ {
+  "n": 21,
+  "id": "d4ecee3146",
+  "kind": "dispute",
+  "A": null,
+  "A_amb": true,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 22,
+  "id": "ad8f74cede",
+  "kind": "dispute",
+  "A": "2003-07-31",
+  "A_amb": false,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 23,
+  "id": "8a17cfbcbc",
+  "kind": "dispute",
+  "A": null,
+  "A_amb": false,
+  "B": null,
+  "B_amb": true
+ },
+ {
+  "n": 24,
+  "id": "b086f17afc",
+  "kind": "dispute",
+  "A": "2000-09-14",
+  "A_amb": false,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 25,
+  "id": "7e4ac1ac03",
+  "kind": "check",
+  "A": "2002-02-05",
+  "A_amb": false,
+  "B": "2002-02-05",
+  "B_amb": false
+ },
+ {
+  "n": 26,
+  "id": "f57bb967f7",
+  "kind": "check",
+  "A": null,
+  "A_amb": false,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 27,
+  "id": "b52bb095e5",
+  "kind": "check",
+  "A": null,
+  "A_amb": false,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 28,
+  "id": "6df34c0553",
+  "kind": "check",
+  "A": "2002-01-23",
+  "A_amb": false,
+  "B": "2002-01-23",
+  "B_amb": false
+ },
+ {
+  "n": 29,
+  "id": "77734f5ec9",
+  "kind": "check",
+  "A": null,
+  "A_amb": false,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 30,
+  "id": "29842116a9",
+  "kind": "check",
+  "A": "2001-03-21",
+  "A_amb": false,
+  "B": "2001-03-21",
+  "B_amb": false
+ },
+ {
+  "n": 31,
+  "id": "7bab839a96",
+  "kind": "check",
+  "A": null,
+  "A_amb": false,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 32,
+  "id": "593db3342d",
+  "kind": "check",
+  "A": "2002-02-11",
+  "A_amb": false,
+  "B": "2002-02-11",
+  "B_amb": false
+ },
+ {
+  "n": 33,
+  "id": "4e6aa93d80",
+  "kind": "dispute",
+  "A": "2001-01-01",
+  "A_amb": false,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 34,
+  "id": "b7e2e5a9c6",
+  "kind": "check",
+  "A": null,
+  "A_amb": false,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 35,
+  "id": "3ce0fdb133",
+  "kind": "check",
+  "A": "2001-02-02",
+  "A_amb": false,
+  "B": "2001-02-02",
+  "B_amb": false
+ },
+ {
+  "n": 36,
+  "id": "73f876b6b0",
+  "kind": "dispute",
+  "A": null,
+  "A_amb": true,
+  "B": "2001-09-20",
+  "B_amb": false
+ },
+ {
+  "n": 37,
+  "id": "88c7086dfe",
+  "kind": "dispute",
+  "A": "2001-03-15",
+  "A_amb": false,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 38,
+  "id": "ecbe9ffed9",
+  "kind": "dispute",
+  "A": "2000-09-18",
+  "A_amb": false,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 39,
+  "id": "edbd3df523",
+  "kind": "dispute",
+  "A": null,
+  "A_amb": true,
+  "B": "2002-01-03",
+  "B_amb": true
+ },
+ {
+  "n": 40,
+  "id": "4e0161ea02",
+  "kind": "dispute",
+  "A": "2002-01-15",
+  "A_amb": false,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 41,
+  "id": "f9e28cc339",
+  "kind": "dispute",
+  "A": null,
+  "A_amb": true,
+  "B": "2000-11-06",
+  "B_amb": false
+ },
+ {
+  "n": 42,
+  "id": "161dcffaa3",
+  "kind": "dispute",
+  "A": "2000-09-05",
+  "A_amb": false,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 43,
+  "id": "030406aed7",
+  "kind": "dispute",
+  "A": null,
+  "A_amb": true,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 44,
+  "id": "dc4e3fd0ad",
+  "kind": "check",
+  "A": null,
+  "A_amb": false,
+  "B": null,
+  "B_amb": false
+ },
+ {
+  "n": 45,
+  "id": "874f502cc1",
+  "kind": "check",
+  "A": "2001-05-25",
+  "A_amb": false,
+  "B": "2001-05-25",
+  "B_amb": false
+ },
+ {
+  "n": 46,
+  "id": "9514f6d14f",
+  "kind": "check",
+  "A": null,
+  "A_amb": true,
+  "B": null,
+  "B_amb": true
+ },
+ {
+  "n": 47,
+  "id": "b09c9385a6",
+  "kind": "check",
+  "A": "2001-11-13",
+  "A_amb": false,
+  "B": "2001-11-13",
+  "B_amb": false
+ },
+ {
+  "n": 48,
+  "id": "8ce8adca14",
+  "kind": "check",
+  "A": "2001-05-02",
+  "A_amb": false,
+  "B": "2001-05-02",
+  "B_amb": false
+ },
+ {
+  "n": 49,
+  "id": "229a0eee1b",
+  "kind": "check",
+  "A": "2001-05-14",
+  "A_amb": false,
+  "B": "2001-05-14",
+  "B_amb": false
+ },
+ {
+  "n": 50,
+  "id": "1a612fee99",
+  "kind": "check",
+  "A": null,
+  "A_amb": false,
+  "B": null,
+  "B_amb": false
+ }
+]

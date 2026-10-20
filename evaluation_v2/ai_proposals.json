@@ -1,0 +1,202 @@
+{
+ "1": {
+  "answer": "N",
+  "reason": "Only says a final estimate is expected \"by Friday\"; sender's own timing, reader is not asked to do something by then."
+ },
+ "2": {
+  "answer": "D 2001-11-07",
+  "reason": "\"hoping to get this approved by Wednesday Tokyo time\" (mail is Mon 5 Nov 2001); weak, it is a target."
+ },
+ "3": {
+  "answer": "N",
+  "reason": "Internal discussion of water sampling, no date."
+ },
+ "4": {
+  "answer": "N",
+  "reason": "Birthday thanks."
+ },
+ "5": {
+  "answer": "N",
+  "reason": "Quotes a contract clause (payment due on the 25th); a recurring term, not a deadline for this mail."
+ },
+ "6": {
+  "answer": "X",
+  "reason": "Mail is cut off in the sheet; says tags must be in \"no later than an hour before schedule flows\" for 07/01 and 07/02, several relative times."
+ },
+ "7": {
+  "answer": "N",
+  "reason": "Personal note, no deadline."
+ },
+ "8": {
+  "answer": "X",
+  "reason": "Funds expected \"either Jan 12 or 15\" and wire \"before 2:00\"; two possible dates, nobody is asked to act by one."
+ },
+ "9": {
+  "answer": "D 2000-03-21",
+  "reason": "\"I have established Tuesday, March 21st as the deadline for responding.\""
+ },
+ "10": {
+  "answer": "D 2001-05-25",
+  "reason": "\"completed by Friday, May 25, 2001.\""
+ },
+ "11": {
+  "answer": "D 2001-10-26",
+  "reason": "\"all trades ... must be completed by 3:00 PM CST Friday, October 26.\""
+ },
+ "12": {
+  "answer": "N",
+  "reason": "Asks \"Do you want to bid anyway? Let me know.\" No date."
+ },
+ "13": {
+  "answer": "N",
+  "reason": "Seminar on Nov 1 with \"Please RSVP\" but no RSVP date. Event date only."
+ },
+ "14": {
+  "answer": "N",
+  "reason": "News article; no one is asked to do anything."
+ },
+ "15": {
+  "answer": "N",
+  "reason": "\"call me ... next week, starting Thu\"; an invitation, not a deadline."
+ },
+ "16": {
+  "answer": "N",
+  "reason": "\"I can FEDEX the tickets to you by Friday\"; the sender's own offer."
+ },
+ "17": {
+  "answer": "D 2001-05-25",
+  "reason": "\"completed by Friday, May 25, 2001.\""
+ },
+ "18": {
+  "answer": "X",
+  "reason": "\"we need to reply by mid next week\" (mail Fri 2 Nov 2001): vague, roughly 7 Nov."
+ },
+ "19": {
+  "answer": "N",
+  "reason": "Orientation on Feb 7 is an event; \"PLEASE RSVP\" has no date."
+ },
+ "20": {
+  "answer": "D 2000-04-03",
+  "reason": "\"we need to pay by monday\" (mail Thu 30 Mar 2000, so Mon 3 Apr)."
+ },
+ "21": {
+  "answer": "N",
+  "reason": "Only relative periods (\"30 days prior\", \"15 days\"), no calendar date."
+ },
+ "22": {
+  "answer": "D 2001-10-19",
+  "reason": "\"advise the Secretary ... by no later than October 19, 2001.\""
+ },
+ "23": {
+  "answer": "N",
+  "reason": "Asks whether a deadline was set; answer is \"last class + a few days\", no date."
+ },
+ "24": {
+  "answer": "N",
+  "reason": "Interview scheduled Monday Sept 18 is an event; no reply deadline."
+ },
+ "25": {
+  "answer": "D 2002-02-05",
+  "reason": "\"send an e-mail to Amy Fitzpatrick by noon on Tuesday\" (mail Mon 4 Feb 2002)."
+ },
+ "26": {
+  "answer": "N",
+  "reason": "Procedure changes on Oct 26; informational."
+ },
+ "27": {
+  "answer": "N",
+  "reason": "No deadline; valuation discussion."
+ },
+ "28": {
+  "answer": "D 2002-01-23",
+  "reason": "\"extended the registration deadline until this Wednesday, January 23rd, 2002.\""
+ },
+ "29": {
+  "answer": "N",
+  "reason": "Chat; \"by Thursday\" is about losing weight."
+ },
+ "30": {
+  "answer": "D 2001-03-21",
+  "reason": "\"Please respond by 10 a.m. on Wednesday, March 21.\""
+ },
+ "31": {
+  "answer": "N",
+  "reason": "Workshop on Sept 12 is an event; RSVP has no date."
+ },
+ "32": {
+  "answer": "X",
+  "reason": "Several: certification \"no later than February 11, 2002\" and \"48 hours\" / Thursday night for drive copying."
+ },
+ "33": {
+  "answer": "N",
+  "reason": "Empty body, only a subject line."
+ },
+ "34": {
+  "answer": "N",
+  "reason": "Lunch chat."
+ },
+ "35": {
+  "answer": "D 2001-02-02",
+  "reason": "\"Please return your comments to me by Friday, Feb. 2.\""
+ },
+ "36": {
+  "answer": "N",
+  "reason": "Status update; \"model by EOD tomorrow\" is the sender's own promise."
+ },
+ "37": {
+  "answer": "N",
+  "reason": "\"timesheet due date is quickly approaching\" but no date given."
+ },
+ "38": {
+  "answer": "N",
+  "reason": "Draft sent; no deadline."
+ },
+ "39": {
+  "answer": "X",
+  "reason": "Several: plans \"due on Jan 7\", budget \"due Jan 3, 2002\"."
+ },
+ "40": {
+  "answer": "N",
+  "reason": "Cards will be available \"by tomorrow morning\"; not something the reader must do."
+ },
+ "41": {
+  "answer": "X",
+  "reason": "Five case due dates (11/6, 11/13, 11/20, 11/27, 12/4)."
+ },
+ "42": {
+  "answer": "N",
+  "reason": "Personal schedule reminder."
+ },
+ "43": {
+  "answer": "N",
+  "reason": "FYI news item; the Governor decides \"no later than the end of September\", not the reader."
+ },
+ "44": {
+  "answer": "N",
+  "reason": "RSVP request, no date."
+ },
+ "45": {
+  "answer": "D 2001-05-25",
+  "reason": "\"completed by Friday, May 25, 2001.\""
+ },
+ "46": {
+  "answer": "X",
+  "reason": "Two deadlines: drops Sept 15, enrollments Sept 20, 2001."
+ },
+ "47": {
+  "answer": "D 2001-11-13",
+  "reason": "\"hearing back from you by Tuesday morning (Nov. 13).\""
+ },
+ "48": {
+  "answer": "D 2001-05-02",
+  "reason": "\"Please respond by 10:00 a.m. on Wednesday, May 2.\""
+ },
+ "49": {
+  "answer": "D 2001-05-14",
+  "reason": "\"get your entry form ... to me before Monday, May 14.\""
+ },
+ "50": {
+  "answer": "N",
+  "reason": "Meeting is May 18 (event); \"RSVP as soon as possible\" has no date."
+ }
+}

@@ -1,0 +1,10 @@
+digraph P { rankdir=TB; nodesep=0.25; ranksep=0.28; dpi=220; node [shape=box, fontname="Times-Roman", fontsize=10, style="rounded", margin="0.08,0.04"]; edge [fontname="Times-Roman", fontsize=9];
+a [label="CMU Enron corpus\n204,499 mails"]; b [label="Cue / no-cue pool scan\n389 cue, 232 no-cue"]; c [label="Stratified sample (seed 20261020)\n200 cue + 100 no-cue = 300"];
+d [label="Split by hash of mail ID\ndev 59 | test 178 (agreed mails)"];
+e [label="Labeller A\ngpt-oss-120b"]; f [label="Labeller B\nqwen3.8-27b"];
+g [label="Silver reference\nboth agree: 237 of 261\ndisputes excluded"];
+h [label="Systems under test\nnaive | rules_v2 (frozen) | LLM gpt-oss-20b\nLLM + quote check | hybrid gate"];
+i [label="Scoring: exact date match\nP, R, F1, review rate\n1,000-sample bootstrap CI"];
+j [label="Injection test\n40 synthetic mails"];
+a->b->c; c->e; c->f; e->g; f->g; g->d; d->h; h->i; c->j [style=dashed]; j->h [style=dashed, label=" "];
+}

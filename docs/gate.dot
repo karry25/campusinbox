@@ -1,0 +1,15 @@
+digraph G { rankdir=TB; nodesep=0.25; ranksep=0.3; dpi=220; node [shape=box, fontname="Times-Roman", fontsize=10, style="rounded", margin="0.08,0.04"]; edge [fontname="Times-Roman", fontsize=9];
+mail [label="Mail (untrusted text)\n+ Date header"];
+rules [label="Rule engine (rules_v2)\ndate + quote, or abstain"];
+llm [label="Model engine (prompted LLM)\nJSON: date + quote"];
+chk [label="Evidence check\nquote found in mail?\ndate consistent with quote?", shape=box, style=""];
+drop [label="Model output discarded", style="rounded,dashed"];
+cmp [label="Same date?", shape=diamond, style="", fontsize=10];
+agree [label="AGREE\n(auto-accept in evaluation;\nshipped app still asks the user)"];
+rev [label="REVIEW\nboth dates and quotes shown"];
+none [label="No candidate date\n(nothing proposed)"];
+human [label="Human approves or edits date", style="rounded,bold"];
+mail -> rules; mail -> llm; llm -> chk; chk -> drop [label="no"]; chk -> cmp [label="yes"]; rules -> cmp;
+cmp -> agree [label="yes"]; cmp -> rev [label="no / rules abstain"]; drop -> none [style=dashed]; rules -> none [style=dashed, label="both empty"];
+agree -> human; rev -> human;
+}

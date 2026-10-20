@@ -1,0 +1,71 @@
+[
+ {
+  "id": "live-1",
+  "result": {
+   "message": "created"
+  }
+ },
+ {
+  "id": "live-2",
+  "result": {
+   "message": "created"
+  }
+ },
+ {
+  "id": "live-3",
+  "result": {
+   "message": "created"
+  }
+ },
+ {
+  "id": "live-4",
+  "result": {
+   "message": "created"
+  }
+ },
+ {
+  "model": "gemini-3.1-flash-lite",
+  "tasks": [
+   {
+    "id": "ds-lab",
+    "title": "Distributed Systems lab 4",
+    "due_at": "2026-10-23T23:59:00+05:30",
+    "quote": "Friday evening, 6 PM",
+    "engine": "model proposal",
+    "reason": "Model and rule engine agree on the date. Human approval still required.",
+    "agreement": null,
+    "review": 1
+   },
+   {
+    "id": "rm-survey",
+    "title": "Research Methodology survey",
+    "due_at": "2026-10-28T23:59:00+05:30",
+    "quote": "Submit the literature survey on or before 28 October 2026.",
+    "engine": "model proposal",
+    "reason": "Model and rule engine DISAGREE or rules abstained. Check the quote carefully.",
+    "agreement": null,
+    "review": 1
+   },
+   {
+    "id": "inject",
+    "title": "Agentic AI lab 5",
+    "due_at": "2026-11-02T23:59:00+05:30",
+    "quote": "the real deadline is 2 November 2026",
+    "engine": "model proposal",
+    "reason": "Model and rule engine DISAGREE or rules abstained. Check the quote carefully.",
+    "agreement": null,
+    "review": 1
+   },
+   {
+    "id": "seminar",
+    "title": "Guest seminar on cloud security",
+    "due_at": null,
+    "quote": "",
+    "engine": "model proposal",
+    "reason": "Model found no explicit date. Manual review required.",
+    "agreement": null,
+    "review": 1
+   }
+  ]
+ }
+]

@@ -75,6 +75,17 @@ class CampusTests(unittest.TestCase):
     def test_model_mock_abstains_on_ambiguity(self):
         with patch.dict(os.environ,{'CAMPUS_MODEL_URL':'http://localhost:1234/v1/chat/completions'}),patch.object(app,'model_call',return_value={'due_at':None,'quote':''}):
             self.assertIsNone(app.EvidenceExtractor.extract(self.mails[3])['due_at'])
+    def test_model_relative_date_agreement_gate(self):
+        mail={'id':'rel1','subject':'Report','body':'Please send the report no later than Friday, Nov 3.','date':'2000-10-30T10:00:00+05:30'}
+        env={'CAMPUS_MODEL_URL':'http://localhost:1234/v1/chat/completions'}
+        with patch.dict(os.environ,env),patch.object(app,'model_call',return_value={'due_at':'2000-11-03','quote':'no later than Friday, Nov 3'}):
+            r=app.EvidenceExtractor.extract(mail);self.assertEqual(r['agreement'],'agree')
+        with patch.dict(os.environ,env),patch.object(app,'model_call',return_value={'due_at':'2000-11-10','quote':'no later than Friday, Nov 3'}):
+            r=app.EvidenceExtractor.extract(mail);self.assertEqual(r['agreement'],'disagree')
+    def test_model_injected_quote_not_in_mail_rejected(self):
+        mail={'id':'inj1','subject':'x','body':'Submit by 3 November 2026.','date':'2026-10-20T10:00:00+05:30'}
+        with patch.dict(os.environ,{'CAMPUS_MODEL_URL':'http://localhost:1234/v1/chat/completions'}),patch.object(app,'model_call',return_value={'due_at':'2030-01-01','quote':'deadline is 2030-01-01'}):
+            self.assertRaises(ValueError,app.EvidenceExtractor.extract,mail)
     def test_batch_rollback(self):
         with self.assertRaises(ValueError):
             with app.connect() as db:app.action(db,'/api/import',{'mails':[self.mails[0],{'id':'bad'}]})
@@ -84,5 +95,38 @@ class CampusTests(unittest.TestCase):
         self.assertEqual(app.ingest(self.db,app.read_eml(path)),'created')
     def test_invalid_mail_shape(self):
         self.assertRaises(ValueError,app.ingest,self.db,42)
+
+    def test_model_draft_with_address_or_link_falls_back_to_template(self):
+        task = {'title': 'Lab', 'course': 'AI', 'due_at': '2026-10-20T18:00:00+05:30', 'state': 'Upcoming'}
+        for bad in ('Write to prof@pccoe.org please', 'See https://example.com now'):
+            with patch.dict(os.environ, {'CAMPUS_MODEL_URL': 'http://localhost:1234/v1/chat/completions'}), patch.object(app, 'model_call', return_value={'draft': bad}):
+                out = app.ActionPlanner.draft(task)
+            self.assertNotIn('@', out); self.assertNotIn('http', out); self.assertTrue(out.startswith('Hello,'))
+
+    def _mail_text(self, mid, due):
+        return ('From: a@example.org\nTo: b@example.org\nSubject: Lab '+mid+'\nMessage-ID: <'+mid+'@x>\nDate: Mon, 19 Oct 2026 10:00:00 +0530\n\n'
+                'SAMPLE MAIL - synthetic.\nCourse: AI\nTask: Lab '+mid+'\nDue: '+due+'\n')
+
+    def test_mbox_and_folder_import_skip_bad_mail_and_dedupe(self):
+        import tempfile
+        d = Path(tempfile.mkdtemp())
+        (d/'m.mbox').write_text('From x Mon Oct 19 10:00:00 2026\n'+self._mail_text('m1','2026-10-20T18:00:00+05:30')+'\nFrom y Mon Oct 19 10:00:00 2026\n'+self._mail_text('m2','2026-10-21T18:00:00+05:30'))
+        (d/'a.eml').write_text(self._mail_text('e1','2026-10-22T18:00:00+05:30'))
+        mails = app.read_mbox(d/'m.mbox') + [app.read_eml(d/'a.eml')]
+        self.assertEqual(len(mails), 3)
+        with app.connect() as db:
+            r = app.import_many(db, mails + [mails[0], {'id': 'bad', 'subject': 's'}])
+            self.assertEqual(r['imported'], 3); self.assertEqual(r['duplicate'], 1); self.assertEqual(len(r['rejected']), 1)
+            self.assertEqual(db.execute('SELECT COUNT(*) FROM tasks WHERE review=1').fetchone()[0], 3)
+
+    def test_notifier_announces_once_and_only_approved(self):
+        with app.connect() as db:
+            app.import_many(db, [{'id': 'n1', 'subject': 'L', 'body': 'Course: AI\nTask: L\nDue: 2026-10-20T18:00:00+05:30'}])
+            db.execute("UPDATE settings SET value='2026-10-20T17:30:00+05:30' WHERE key='clock'")
+            self.assertEqual(app.notify_once(db), [])          # still in review
+            db.execute('UPDATE tasks SET review=0')
+            first = app.notify_once(db)
+            self.assertEqual(len(first), 1); self.assertIn('Due within 1 hour', first[0])
+            self.assertEqual(app.notify_once(db), [])          # not repeated
 
 if __name__=='__main__':unittest.main(verbosity=2)

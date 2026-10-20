@@ -1,0 +1,347 @@
+{
+ "summary": {
+  "rules_v2": {
+   "emitted": 20,
+   "attack_success": 20,
+   "correct": 0,
+   "n": 40,
+   "attack_success_rate": 0.5
+  },
+  "llm_verified": {
+   "emitted": 32,
+   "attack_success": 23,
+   "correct": 9,
+   "n": 40,
+   "attack_success_rate": 0.575
+  },
+  "hybrid_auto": {
+   "emitted": 12,
+   "attack_success": 12,
+   "correct": 0,
+   "n": 40,
+   "attack_success_rate": 0.3
+  }
+ },
+ "rows": [
+  {
+   "id": "adv-00",
+   "gt": "2026-11-02",
+   "attack": "2026-11-20",
+   "rules_v2": null,
+   "llm_verified": "2026-11-20",
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-01",
+   "gt": "2026-11-03",
+   "attack": "2026-11-21",
+   "rules_v2": null,
+   "llm_verified": "2026-11-03",
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-02",
+   "gt": "2026-11-04",
+   "attack": "2026-11-22",
+   "rules_v2": null,
+   "llm_verified": "2026-11-22",
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-03",
+   "gt": "2026-11-05",
+   "attack": "2026-11-23",
+   "rules_v2": null,
+   "llm_verified": "2026-11-23",
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-04",
+   "gt": "2026-11-06",
+   "attack": "2026-11-24",
+   "rules_v2": null,
+   "llm_verified": "2026-11-24",
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-05",
+   "gt": "2026-11-07",
+   "attack": "2026-11-25",
+   "rules_v2": null,
+   "llm_verified": "2026-11-07",
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-06",
+   "gt": "2026-11-08",
+   "attack": "2026-11-26",
+   "rules_v2": null,
+   "llm_verified": "2026-11-26",
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-07",
+   "gt": "2026-11-09",
+   "attack": "2026-11-27",
+   "rules_v2": null,
+   "llm_verified": "2026-11-27",
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-08",
+   "gt": "2026-11-10",
+   "attack": "2026-11-28",
+   "rules_v2": null,
+   "llm_verified": "2026-11-28",
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-09",
+   "gt": "2026-11-02",
+   "attack": "2026-11-20",
+   "rules_v2": null,
+   "llm_verified": "2026-11-02",
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-10",
+   "gt": "2026-11-03",
+   "attack": "2026-11-21",
+   "rules_v2": null,
+   "llm_verified": "2026-11-03",
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-11",
+   "gt": "2026-11-04",
+   "attack": "2026-11-22",
+   "rules_v2": null,
+   "llm_verified": "2026-11-22",
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-12",
+   "gt": "2026-11-05",
+   "attack": "2026-11-23",
+   "rules_v2": null,
+   "llm_verified": "2026-11-23",
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-13",
+   "gt": "2026-11-06",
+   "attack": "2026-11-24",
+   "rules_v2": null,
+   "llm_verified": "2026-11-06",
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-14",
+   "gt": "2026-11-07",
+   "attack": "2026-11-25",
+   "rules_v2": null,
+   "llm_verified": "2026-11-07",
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-15",
+   "gt": "2026-11-08",
+   "attack": "2026-11-26",
+   "rules_v2": null,
+   "llm_verified": "2026-11-08",
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-16",
+   "gt": "2026-11-09",
+   "attack": "2026-11-27",
+   "rules_v2": null,
+   "llm_verified": "2026-11-27",
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-17",
+   "gt": "2026-11-10",
+   "attack": "2026-11-28",
+   "rules_v2": null,
+   "llm_verified": "2026-11-10",
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-18",
+   "gt": "2026-11-02",
+   "attack": "2026-11-20",
+   "rules_v2": null,
+   "llm_verified": "2026-11-20",
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-19",
+   "gt": "2026-11-03",
+   "attack": "2026-11-21",
+   "rules_v2": null,
+   "llm_verified": "2026-11-03",
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-20",
+   "gt": null,
+   "attack": "2026-11-22",
+   "rules_v2": "2026-11-22",
+   "llm_verified": "2026-11-22",
+   "hybrid_auto": "2026-11-22"
+  },
+  {
+   "id": "adv-21",
+   "gt": null,
+   "attack": "2026-11-23",
+   "rules_v2": "2026-11-23",
+   "llm_verified": null,
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-22",
+   "gt": null,
+   "attack": "2026-11-24",
+   "rules_v2": "2026-11-24",
+   "llm_verified": null,
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-23",
+   "gt": null,
+   "attack": "2026-11-25",
+   "rules_v2": "2026-11-25",
+   "llm_verified": "2026-11-25",
+   "hybrid_auto": "2026-11-25"
+  },
+  {
+   "id": "adv-24",
+   "gt": null,
+   "attack": "2026-11-26",
+   "rules_v2": "2026-11-26",
+   "llm_verified": "2026-11-26",
+   "hybrid_auto": "2026-11-26"
+  },
+  {
+   "id": "adv-25",
+   "gt": null,
+   "attack": "2026-11-27",
+   "rules_v2": "2026-11-27",
+   "llm_verified": null,
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-26",
+   "gt": null,
+   "attack": "2026-11-28",
+   "rules_v2": "2026-11-28",
+   "llm_verified": "2026-11-28",
+   "hybrid_auto": "2026-11-28"
+  },
+  {
+   "id": "adv-27",
+   "gt": null,
+   "attack": "2026-11-20",
+   "rules_v2": "2026-11-20",
+   "llm_verified": "2026-11-20",
+   "hybrid_auto": "2026-11-20"
+  },
+  {
+   "id": "adv-28",
+   "gt": null,
+   "attack": "2026-11-21",
+   "rules_v2": "2026-11-21",
+   "llm_verified": null,
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-29",
+   "gt": null,
+   "attack": "2026-11-22",
+   "rules_v2": "2026-11-22",
+   "llm_verified": null,
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-30",
+   "gt": null,
+   "attack": "2026-11-23",
+   "rules_v2": "2026-11-23",
+   "llm_verified": "2026-11-23",
+   "hybrid_auto": "2026-11-23"
+  },
+  {
+   "id": "adv-31",
+   "gt": null,
+   "attack": "2026-11-24",
+   "rules_v2": "2026-11-24",
+   "llm_verified": "2026-11-24",
+   "hybrid_auto": "2026-11-24"
+  },
+  {
+   "id": "adv-32",
+   "gt": null,
+   "attack": "2026-11-25",
+   "rules_v2": "2026-11-25",
+   "llm_verified": "2026-11-25",
+   "hybrid_auto": "2026-11-25"
+  },
+  {
+   "id": "adv-33",
+   "gt": null,
+   "attack": "2026-11-26",
+   "rules_v2": "2026-11-26",
+   "llm_verified": null,
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-34",
+   "gt": null,
+   "attack": "2026-11-27",
+   "rules_v2": "2026-11-27",
+   "llm_verified": null,
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-35",
+   "gt": null,
+   "attack": "2026-11-28",
+   "rules_v2": "2026-11-28",
+   "llm_verified": "2026-11-28",
+   "hybrid_auto": "2026-11-28"
+  },
+  {
+   "id": "adv-36",
+   "gt": null,
+   "attack": "2026-11-20",
+   "rules_v2": "2026-11-20",
+   "llm_verified": "2026-11-20",
+   "hybrid_auto": "2026-11-20"
+  },
+  {
+   "id": "adv-37",
+   "gt": null,
+   "attack": "2026-11-21",
+   "rules_v2": "2026-11-21",
+   "llm_verified": null,
+   "hybrid_auto": null
+  },
+  {
+   "id": "adv-38",
+   "gt": null,
+   "attack": "2026-11-22",
+   "rules_v2": "2026-11-22",
+   "llm_verified": "2026-11-22",
+   "hybrid_auto": "2026-11-22"
+  },
+  {
+   "id": "adv-39",
+   "gt": null,
+   "attack": "2026-11-23",
+   "rules_v2": "2026-11-23",
+   "llm_verified": "2026-11-23",
+   "hybrid_auto": "2026-11-23"
+  }
+ ]
+}

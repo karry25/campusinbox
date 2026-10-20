@@ -102,6 +102,18 @@ Plain-text .eml files can also be imported from the terminal while the server is
 ```bat
 py app.py --import-eml sample.eml
 ```
+
+Bulk import (read-only, offline, nothing is sent):
+
+    py app.py --import-dir path/to/folder_of_eml_files
+    py app.py --import-mbox path/to/export.mbox
+
+Local reminder notifier (same worker as the page; prints reminders not announced before, approved tasks only):
+
+    py app.py --notify --notify-file reminders.txt
+
+Run it from Task Scheduler or cron. It is a text notification, not push, e-mail or WhatsApp.
+
 The importer takes a plain-text body and ignores attachments/HTML-only content. It is not an inbox watcher. No OAuth connection is present.
 
 ## Persistence, reminders and reset

@@ -1,0 +1,201 @@
+==================================================================
+  CampusInbox  -  DEMO MODE  (sample student inbox)
+  This is a simulated sign-in for the demo video.
+  NOT a real Google login. No real account or mail is used.
+==================================================================
+
+[demo] Sign in with Google (SIMULATED)
+[demo] Email [demo.student@campusinbox.example]: 
+[demo] Password [hidden, not checked - demo only]: ********
+[demo] Signed in as demo.student@campusinbox.example (DEMO ACCOUNT - synthetic inbox)
+
+[demo] Inbox: 10 mails found
+   - Agentic AI lab submission                  [Agentic AI]         2026-10-21
+   - Distributed Systems report deadline        [Distributed Systems] 2026-10-21
+   - AI presentation slides                     [Other]              2026-10-21
+   - Project review next Friday                 [Agentic AI]         2026-10-21
+   - Untrusted mail content example             [Other]              2026-10-21
+   - Agentic AI: FA2 paper presentation slides  [Agentic AI]         2026-10-21
+   - DS report deadline revised                 [Distributed Systems] 2026-10-21
+   - OOMD term-work file                        [OOMD]               2026-10-21
+   - Upload certificates                        [Placement cell]     2026-10-21
+   - Library workshop                           [Other]              2026-10-21
+
+------------------------------------------------------------------
+MAIL: Agentic AI lab submission
+  LangGraph agent trace (each AI line is one tool call):
+    AI -> tool read_header    {}
+    tool result: {"date": "2026-10-21", "weekday": "Wednesday"}
+    AI -> tool search_mail    {}
+    tool result: [{"n": 4, "sentence": "Due: 2026-10-19T20:00:00+05:30", "deadline_cue": true, "date_expression": false}]
+    AI -> tool parse_date     {"text": "Due: 2026-10-19T20:00:00+05:30"}
+    tool result: {"date": null, "reason": "no date expression"}
+    AI -> tool final_answer   {"has_deadline": false, "ambiguous": true}
+    tool result: {"has_deadline": false, "deadline_date": "", "ambiguous": true, "quote": ""}
+  No single actionable deadline (ambiguous).
+------------------------------------------------------------------
+MAIL: Distributed Systems report deadline
+  LangGraph agent trace (each AI line is one tool call):
+    AI -> tool read_header    {}
+    tool result: {"date": "2026-10-21", "weekday": "Wednesday"}
+    AI -> tool search_mail    {}
+    tool result: [{"n": 0, "sentence": "Distributed Systems report deadline", "deadline_cue": true, "date_expression": false}, 
+    AI -> tool parse_date     {"text": "Distributed Systems report deadline"}
+    tool result: {"date": null, "reason": "no date expression"}
+    AI -> tool final_answer   {"has_deadline": false, "ambiguous": true}
+    tool result: {"has_deadline": false, "deadline_date": "", "ambiguous": true, "quote": ""}
+  No single actionable deadline (ambiguous).
+------------------------------------------------------------------
+MAIL: AI presentation slides
+  LangGraph agent trace (each AI line is one tool call):
+    AI -> tool read_header    {}
+    tool result: {"date": "2026-10-21", "weekday": "Wednesday"}
+    AI -> tool search_mail    {}
+    tool result: [{"n": 4, "sentence": "Due: 2026-10-19T21:45:00+05:30", "deadline_cue": true, "date_expression": false}]
+    AI -> tool parse_date     {"text": "Due: 2026-10-19T21:45:00+05:30"}
+    tool result: {"date": null, "reason": "no date expression"}
+    AI -> tool final_answer   {"has_deadline": false, "ambiguous": true}
+    tool result: {"has_deadline": false, "deadline_date": "", "ambiguous": true, "quote": ""}
+  No single actionable deadline (ambiguous).
+------------------------------------------------------------------
+MAIL: Project review next Friday
+  LangGraph agent trace (each AI line is one tool call):
+    AI -> tool read_header    {}
+    tool result: {"date": "2026-10-21", "weekday": "Wednesday"}
+    AI -> tool search_mail    {}
+    tool result: [{"n": 0, "sentence": "Project review next Friday", "deadline_cue": false, "date_expression": true}, {"n": 4, 
+    AI -> tool parse_date     {"text": "Ask for the exact deadline before adding reminders."}
+    tool result: {"date": null, "reason": "no date expression"}
+    AI -> tool final_answer   {"has_deadline": false, "ambiguous": true}
+    tool result: {"has_deadline": false, "deadline_date": "", "ambiguous": true, "quote": ""}
+  No single actionable deadline (ambiguous).
+------------------------------------------------------------------
+MAIL: Untrusted mail content example
+  LangGraph agent trace (each AI line is one tool call):
+    AI -> tool read_header    {}
+    tool result: {"date": "2026-10-21", "weekday": "Wednesday"}
+    AI -> tool search_mail    {}
+    tool result: [{"n": 4, "sentence": "Due: 2026-10-22T17:00:00+05:30", "deadline_cue": true, "date_expression": false}]
+    AI -> tool parse_date     {"text": "Due: 2026-10-22T17:00:00+05:30"}
+    tool result: {"date": null, "reason": "no date expression"}
+    AI -> tool final_answer   {"has_deadline": false, "ambiguous": true}
+    tool result: {"has_deadline": false, "deadline_date": "", "ambiguous": true, "quote": ""}
+  No single actionable deadline (ambiguous).
+------------------------------------------------------------------
+MAIL: Agentic AI: FA2 paper presentation slides
+  LangGraph agent trace (each AI line is one tool call):
+    AI -> tool read_header    {}
+    tool result: {"date": "2026-10-21", "weekday": "Wednesday"}
+    AI -> tool search_mail    {}
+    tool result: [{"n": 2, "sentence": "Dear students, the FA2 paper presentation slides must be submitted by Friday.", "deadli
+    AI -> tool parse_date     {"text": "Dear students, the FA2 paper presentation slides must be sub
+    tool result: {"date": "2026-10-23", "reason": "resolved against the Date header"}
+    AI -> tool check_quote    {"quote": "Dear students, the FA2 paper presentation slides must be su
+    tool result: {"ok": true, "reason": "quote is verbatim and holds the date"}
+    AI -> tool final_answer   {"has_deadline": true, "deadline_date": "2026-10-23", "quote": "Dear s
+    tool result: {"has_deadline": true, "deadline_date": "2026-10-23", "ambiguous": false, "quote": "Dear students, the FA2 pap
+  DEADLINE FOUND: 2026-10-23
+  evidence quote: "Dear students, the FA2 paper presentation slides must be submitted by Friday."
+  date calculator: Friday, 2026-10-23 - 2 day(s) left
+  calendar (next 7 days, read-only): Agentic AI lecture, DS lab
+  calendar proposal: "DUE: Agentic AI: FA2 paper presentation slides" on 2026-10-23 - proposal only - nothing was added to your calendar
+  Add it yourself via the link? (y/n) y
+  https://calendar.google.com/calendar/render?action=TEMPLATE&text=DUE%3A+Agentic+AI%3A+FA2+paper+presentation+slides&dates=20261023%2F20261023&details=Proposed+by+CampusInbox.+Review+before+saving.
+  reminder the agent WOULD send (preview, not sent):
+    WhatsApp: CampusInbox reminder: "Agentic AI: FA2 paper presentation slides" is due on 2026-10-23 (Friday, 2026-10-23 - 2 day(s) left). Reply done when submitted.
+    Email:    Subject: CampusInbox reminder | CampusInbox reminder: "Agentic AI: FA2 paper presentation slides" is due on 2026-10-23 (Friday, 2026-10-23 - 2 day(s) left). Reply done when submitted.
+  note: PREVIEW ONLY - nothing was sent. Live WhatsApp/SMTP sending is implemented in the app but needs your own credentials (CAMPUS_WA_* / CAMPUS_SMTP_* plus CAMPUS_NOTIFY_LIVE=1) and is not live-tested.
+------------------------------------------------------------------
+MAIL: DS report deadline revised
+  LangGraph agent trace (each AI line is one tool call):
+    AI -> tool read_header    {}
+    tool result: {"date": "2026-10-21", "weekday": "Wednesday"}
+    AI -> tool search_mail    {}
+    tool result: [{"n": 0, "sentence": "DS report deadline revised", "deadline_cue": true, "date_expression": false}, {"n": 2, 
+    AI -> tool parse_date     {"text": "DS report deadline revised"}
+    tool result: {"date": null, "reason": "no date expression"}
+    AI -> tool final_answer   {"has_deadline": false, "ambiguous": true}
+    tool result: {"has_deadline": false, "deadline_date": "", "ambiguous": true, "quote": ""}
+  No single actionable deadline (ambiguous).
+------------------------------------------------------------------
+MAIL: OOMD term-work file
+  LangGraph agent trace (each AI line is one tool call):
+    AI -> tool read_header    {}
+    tool result: {"date": "2026-10-21", "weekday": "Wednesday"}
+    AI -> tool search_mail    {}
+    tool result: [{"n": 2, "sentence": "The term-work file submission closes on 30 October.", "deadline_cue": true, "date_expre
+    AI -> tool parse_date     {"text": "The term-work file submission closes on 30 October."}
+    tool result: {"date": "2026-10-30", "reason": "resolved against the Date header"}
+    AI -> tool check_quote    {"quote": "The term-work file submission closes on 30 October.", "date
+    tool result: {"ok": true, "reason": "quote is verbatim and holds the date"}
+    AI -> tool final_answer   {"has_deadline": true, "deadline_date": "2026-10-30", "quote": "The te
+    tool result: {"has_deadline": true, "deadline_date": "2026-10-30", "ambiguous": false, "quote": "The term-work file submiss
+  DEADLINE FOUND: 2026-10-30
+  evidence quote: "The term-work file submission closes on 30 October."
+  date calculator: Friday, 2026-10-30 - 9 day(s) left
+  calendar (next 7 days, read-only): Agentic AI lecture, DS lab
+  calendar proposal: "DUE: OOMD term-work file" on 2026-10-30 - proposal only - nothing was added to your calendar
+  Add it yourself via the link? (y/n) y
+  https://calendar.google.com/calendar/render?action=TEMPLATE&text=DUE%3A+OOMD+term-work+file&dates=20261030%2F20261030&details=Proposed+by+CampusInbox.+Review+before+saving.
+  reminder the agent WOULD send (preview, not sent):
+    WhatsApp: CampusInbox reminder: "OOMD term-work file" is due on 2026-10-30 (Friday, 2026-10-30 - 9 day(s) left). Reply done when submitted.
+    Email:    Subject: CampusInbox reminder | CampusInbox reminder: "OOMD term-work file" is due on 2026-10-30 (Friday, 2026-10-30 - 9 day(s) left). Reply done when submitted.
+  note: PREVIEW ONLY - nothing was sent. Live WhatsApp/SMTP sending is implemented in the app but needs your own credentials (CAMPUS_WA_* / CAMPUS_SMTP_* plus CAMPUS_NOTIFY_LIVE=1) and is not live-tested.
+------------------------------------------------------------------
+MAIL: Upload certificates
+  LangGraph agent trace (each AI line is one tool call):
+    AI -> tool read_header    {}
+    tool result: {"date": "2026-10-21", "weekday": "Wednesday"}
+    AI -> tool search_mail    {}
+    tool result: [{"n": 2, "sentence": "All shortlisted students must upload certificates by the 28th on the placement portal."
+    AI -> tool parse_date     {"text": "All shortlisted students must upload certificates by the 28t
+    tool result: {"date": "2026-10-28", "reason": "resolved against the Date header"}
+    AI -> tool check_quote    {"quote": "All shortlisted students must upload certificates by the 28
+    tool result: {"ok": true, "reason": "quote is verbatim and holds the date"}
+    AI -> tool final_answer   {"has_deadline": true, "deadline_date": "2026-10-28", "quote": "All sh
+    tool result: {"has_deadline": true, "deadline_date": "2026-10-28", "ambiguous": false, "quote": "All shortlisted students m
+  DEADLINE FOUND: 2026-10-28
+  evidence quote: "All shortlisted students must upload certificates by the 28th on the placement portal."
+  date calculator: Wednesday, 2026-10-28 - 7 day(s) left
+  calendar (next 7 days, read-only): Agentic AI lecture, DS lab
+  calendar proposal: "DUE: Upload certificates" on 2026-10-28 - proposal only - nothing was added to your calendar
+  Add it yourself via the link? (y/n) y
+  https://calendar.google.com/calendar/render?action=TEMPLATE&text=DUE%3A+Upload+certificates&dates=20261028%2F20261028&details=Proposed+by+CampusInbox.+Review+before+saving.
+  reminder the agent WOULD send (preview, not sent):
+    WhatsApp: CampusInbox reminder: "Upload certificates" is due on 2026-10-28 (Wednesday, 2026-10-28 - 7 day(s) left). Reply done when submitted.
+    Email:    Subject: CampusInbox reminder | CampusInbox reminder: "Upload certificates" is due on 2026-10-28 (Wednesday, 2026-10-28 - 7 day(s) left). Reply done when submitted.
+  note: PREVIEW ONLY - nothing was sent. Live WhatsApp/SMTP sending is implemented in the app but needs your own credentials (CAMPUS_WA_* / CAMPUS_SMTP_* plus CAMPUS_NOTIFY_LIVE=1) and is not live-tested.
+------------------------------------------------------------------
+MAIL: Library workshop
+  LangGraph agent trace (each AI line is one tool call):
+    AI -> tool read_header    {}
+    tool result: {"date": "2026-10-21", "weekday": "Wednesday"}
+    AI -> tool search_mail    {}
+    tool result: [{"n": 2, "sentence": "A Zotero workshop will be held on October 28 in the library.", "deadline_cue": false, "
+    AI -> tool final_answer   {"has_deadline": false, "ambiguous": false}
+    tool result: {"has_deadline": false, "deadline_date": "", "ambiguous": false, "quote": ""}
+  No single actionable deadline (none found).
+
+------------------------------------------------------------------
+DEADLINES BY COURSE (per-subject view):
+  [Agentic AI]
+    - Agentic AI: FA2 paper presentation slide 2026-10-23
+  [OOMD]
+    - OOMD term-work file                      2026-10-30
+  [Placement cell]
+    - Upload certificates                      2026-10-28
+
+------------------------------------------------------------------
+CHAT over the demo inbox (offline retrieval, answers cite the source line):
+  Q: When is the RM paper due?
+  A: Closest match: Dear students, the FA2 paper presentation slides must be submitted by Friday.
+     source: mail "Agentic AI: FA2 paper presentation slides" (demo-agentic)
+  Q: What is the lab task?
+  A: Closest match: Task: Autonomous assistant lab
+     source: mail "Agentic AI lab submission" (sample-001)
+
+==================================================================
+  END OF DEMO. Everything above used the synthetic inbox and the
+  offline scripted model. No real account, mail, calendar or phone
+  was touched; no message was sent; no calendar event was written.
+==================================================================
